@@ -1,29 +1,42 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState, createContext } from 'react';
 import { ThemeProvider } from '@mui/material';
 
 import { StylesProvider } from '@mui/styles';
-import { themeCreator } from '../base';
+import { dartThemeCreator, lightThemeCreator } from '../base';
 
-export const ThemeContext = React.createContext(
-  (themeName: string): void => { }
-);
+interface IThemeContext {
+	setThemeName(themeName: string): void;
+	themeName: string
+}
 
-const ThemeProviderWrapper: React.FC = (props) => {
-  const curThemeName = localStorage.getItem('appTheme') || 'NebulaFighterTheme';
-  const [themeName, _setThemeName] = useState(curThemeName);
-  const theme = themeCreator(themeName);
-  const setThemeName = (themeName: string): void => {
-    localStorage.setItem('appTheme', themeName);
-    _setThemeName(themeName);
-  };
+export const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
 
-  return (
-    <StylesProvider injectFirst>
-      <ThemeContext.Provider value={setThemeName}>
-        <ThemeProvider theme={theme}>{props.children}</ThemeProvider >
-      </ThemeContext.Provider>
-    </StylesProvider>
-  );
+const ThemeProviderWrapper: React.FC = ({ children }) => {
+	const lastSelectedTheme = useMemo(() => {
+		return localStorage.getItem('appTheme') || 'NebulaFighterTheme';
+	}, []);
+
+	const [themeName, _setThemeName] = useState(lastSelectedTheme);
+
+	const darkTheme = dartThemeCreator('NebulaFighterTheme');
+	const lightTheme = lightThemeCreator('PureLightTheme');
+
+	const setThemeName = (themeName: string): void => {
+		localStorage.setItem('appTheme', themeName);
+		_setThemeName(themeName);
+	};
+
+	return (
+		<StylesProvider injectFirst>
+			<ThemeContext.Provider value={{ themeName, setThemeName }}>
+				<ThemeProvider
+					theme={themeName === 'NebulaFighterTheme' ? darkTheme : lightTheme}
+				>
+					{children}
+				</ThemeProvider>
+			</ThemeContext.Provider>
+		</StylesProvider>
+	);
 };
 
 export default ThemeProviderWrapper;

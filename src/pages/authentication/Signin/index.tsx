@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Paper from '@mui/material/Paper';
 
@@ -34,11 +34,14 @@ import { Helmet } from 'react-helmet-async';
 import { Copyright } from './../Copyright';
 import { AuthButton } from '../AuthButton';
 
+import { ThemeContext } from '@core/config/theme/schemes/ThemeProvider';
+
 
 const LoginWithGoogleButton = styled(Button)(
 	({ theme }) => `
       font-size: 15px;
       box-shadow: ${theme.colors.shadows.primary};
+			border: none;
       .MuiButton-endIcon {
         color: ${theme.palette.error.contrastText}
       },
@@ -71,7 +74,7 @@ const schema = yup
 	})
 	.required();
 
-export const Signin = () => {
+export const Signin: React.FC = () => {
 	const {
 		register,
 		handleSubmit,
@@ -79,6 +82,8 @@ export const Signin = () => {
 	} = useForm<ILoginData>({
 		resolver: yupResolver(schema),
 	});
+
+	const { setThemeName } = useContext(ThemeContext);
 
 	const { user, signInWithGoogle, signInWithEmailAndPassword } = useAuth();
 	const [showPassword, setShowPassword] = useState(false);
@@ -98,6 +103,8 @@ export const Signin = () => {
 	};
 
 	function loginWithGoogle() {
+
+		setThemeName('PureLightTheme')
 		if (!user) {
 			signInWithGoogle();
 		}

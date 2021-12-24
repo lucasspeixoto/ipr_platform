@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { Box, Hidden, IconButton, Tooltip, Typography } from '@mui/material';
+import { useContext, useState } from 'react';
+import { Box, Hidden, IconButton, Tooltip } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -7,6 +7,8 @@ import CloseTwoToneIcon from '@mui/icons-material/CloseTwoTone';
 
 import { SidebarContext } from '@contexts/SidebarContext';
 import { useAuth } from '@hooks/useAuth';
+import { ThemeSwitch } from '../Toggle';
+import { ThemeContext } from '@core/config/theme/schemes/ThemeProvider';
 
 const HeaderWrapper = styled(Box)(
 	({ theme }) => `
@@ -30,13 +32,26 @@ const HeaderWrapper = styled(Box)(
 function Header() {
 	const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
 
+	const { themeName, setThemeName } = useContext(ThemeContext);
+
+	const [darkTheme, setDarkTheme] = useState(() =>
+		themeName === 'NebulaFighterTheme' ? true : false,
+	);
+
 	const { logout } = useAuth();
+
+	const handleChangeTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setDarkTheme(event.target.checked);
+		if (darkTheme) {
+			setThemeName('PureLightTheme');
+		} else {
+			setThemeName('NebulaFighterTheme');
+		}
+	};
 
 	return (
 		<HeaderWrapper display='flex' alignItems='center'>
-			<Box display='flex' alignItems='center'>
-				<Typography variant='h3'>Graça e paz Irmão(ã) Lucas</Typography>
-			</Box>
+			<ThemeSwitch checked={darkTheme} onChange={handleChangeTheme} />
 			<Box display='flex' alignItems='center'>
 				<Tooltip arrow title='Sair'>
 					<IconButton color='primary' onClick={() => logout()}>

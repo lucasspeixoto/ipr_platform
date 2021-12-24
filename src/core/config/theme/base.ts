@@ -2,9 +2,14 @@ import React from "react";
 
 import { Theme } from "@mui/material";
 import { NebulaFighterTheme } from "./schemes/NebulaFighterTheme";
+import { PureLightTheme } from "./schemes/PureLightTheme";
 
-export function themeCreator(theme: string): Theme {
-  return themeMap[theme];
+export function dartThemeCreator(theme: string): Theme {
+  return darkThemeMap[theme];
+}
+
+export function lightThemeCreator(theme: string): Theme {
+  return lightThemeMap[theme];
 }
 
 declare module "@mui/material/styles" {
@@ -234,6 +239,10 @@ declare module "@mui/material/styles" {
   }
 }
 
-const themeMap: { [key: string]: Theme } = {
+const darkThemeMap: { [key: string]: Theme } = {
   NebulaFighterTheme,
+};
+
+const lightThemeMap: { [key: string]: Theme } = {
+  PureLightTheme,
 };
