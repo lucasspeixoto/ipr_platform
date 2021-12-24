@@ -354,6 +354,26 @@ export const NebulaFighterTheme = createTheme({
           width: "100%",
           height: "100%",
         },
+        "&::-webkit-scrollbar": {
+					width: '14px',
+					overflow: 'initial',
+					zIndex: 1,
+				},
+        "&::-webkit-scrollbar-track": {
+					boxShadow: `inset 0 0 6px colors.primary.main`,
+					zIndex: 1,
+				},
+				"&::-webkit-scrollbar-thumb": {
+					backgroundColor: colors.primary.main,
+					outline: `.2px solid slategrey`,
+					borderRadius: '20px',
+					opacity: 0.4,
+					zIndex: 1,
+					"&:hover": {
+						opacity: 1,
+						backgroundColor: colors.secondary.main,
+					},
+				},
         ":root": {
           "--swiper-theme-color": colors.primary.main,
           colorScheme: "dark",

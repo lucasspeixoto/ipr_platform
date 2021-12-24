@@ -1,33 +1,41 @@
-import { useContext } from "react";
-import { ListSubheader, List, Typography } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { useContext } from 'react';
+import { ListSubheader, List } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
-import menuItems from "./items";
-import { styled } from "@mui/material/styles";
+import menuItems from './items';
+import { styled } from '@mui/material/styles';
 
-import { NavLink as RouterLink } from "react-router-dom";
+import { NavLink as RouterLink } from 'react-router-dom';
 
-import { Button, ListItem } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
-import ChurchIcon from "@mui/icons-material/Church";
-import InsertChartIcon from "@mui/icons-material/InsertChart";
-import TableChartIcon from "@mui/icons-material/TableChart";
-import ContactPhoneIcon from "@mui/icons-material/ContactPhone";
-import LegendToggleIcon from "@mui/icons-material/LegendToggle";
+import { Button, ListItem } from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import ChurchIcon from '@mui/icons-material/Church';
+import InsertChartIcon from '@mui/icons-material/InsertChart';
+import TableChartIcon from '@mui/icons-material/TableChart';
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
+import LegendToggleIcon from '@mui/icons-material/LegendToggle';
+import CalculateIcon from '@mui/icons-material/Calculate';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 
-import { SidebarContext } from "../../../../../core/context/SidebarContext";
+import { SidebarContext } from '@contexts/SidebarContext';
 
 const icons = {
-  "/registration/personal": <ContactPhoneIcon />,
-  "/registration/supplementary": <PersonIcon />,
-  "/registration/ecclesiastical": <ChurchIcon />,
-  "/admin/detail": <TableChartIcon />,
-  "/admin/statistics": <InsertChartIcon />,
-  "/admin/data": <LegendToggleIcon />,
+	'/registration/personal': <ContactPhoneIcon />,
+	'/registration/supplementary': <PersonIcon />,
+	'/registration/ecclesiastical': <ChurchIcon />,
+	'/admin/detail': <TableChartIcon />,
+	'/admin/statistics': <InsertChartIcon />,
+	'/admin/data': <LegendToggleIcon />,
+	'/finance/register': <CalculateIcon />,
+	'/finance/gains': <AddCircleOutlineIcon />,
+	'/finance/expenses': <RemoveCircleOutlineIcon />,
+  '/finance/dashboards': <DashboardCustomizeIcon />,
 };
 
 const MenuWrapper = styled(List)(
-  ({ theme }) => `
+	({ theme }) => `
     margin-bottom: ${theme.spacing(1)};
     padding: 0;
 
@@ -43,11 +51,11 @@ const MenuWrapper = styled(List)(
       padding: ${theme.spacing(0.8, 2)};
       line-height: 1.4;
     }
-`
+`,
 );
 
 const SubMenuWrapper = styled(List)(
-  ({ theme }) => `
+	({ theme }) => `
     &.MuiList-root {
       padding: 0;
 
@@ -133,50 +141,46 @@ const SubMenuWrapper = styled(List)(
         }
       }
     }
-`
+`,
 );
 
 function SidebarMenu() {
-  const location = useLocation();
+	const location = useLocation();
 
-  const { toggleSidebar } = useContext(SidebarContext);
+	const { toggleSidebar } = useContext(SidebarContext);
 
-  return (
-    <>
-      <Typography variant='h4' sx={{ ml: 4 }}>
-        Graça e Paz irmão(a) Lucas
-      </Typography>
-
-      {menuItems.map((section) => (
-        <MenuWrapper
-          key={section.heading}
-          subheader={
-            <ListSubheader component='div' disableSticky>
-              {section.heading}
-            </ListSubheader>
-          }
-        >
-          <SubMenuWrapper>
-            {section.items.map((item, index) => (
-              <ListItem component='div' key={index}>
-                <Button
-                  className={
-                    item.link === location.pathname ? "Mui-active" : ""
-                  }
-                  component={RouterLink}
-                  onClick={toggleSidebar}
-                  to={item.link}
-                  startIcon={icons[item.link]}
-                >
-                  {item.name}
-                </Button>
-              </ListItem>
-            ))}
-          </SubMenuWrapper>
-        </MenuWrapper>
-      ))}
-    </>
-  );
+	return (
+		<>
+			{menuItems.map(section => (
+				<MenuWrapper
+					key={section.heading}
+					subheader={
+						<ListSubheader component='div' disableSticky>
+							{section.heading}
+						</ListSubheader>
+					}
+				>
+					<SubMenuWrapper>
+						{section.items.map((item, index) => (
+							<ListItem component='div' key={index}>
+								<Button
+									className={
+										item.link === location.pathname ? 'Mui-active' : ''
+									}
+									component={RouterLink}
+									onClick={toggleSidebar}
+									to={item.link}
+									startIcon={icons[item.link]}
+								>
+									{item.name}
+								</Button>
+							</ListItem>
+						))}
+					</SubMenuWrapper>
+				</MenuWrapper>
+			))}
+		</>
+	);
 }
 
 export default SidebarMenu;

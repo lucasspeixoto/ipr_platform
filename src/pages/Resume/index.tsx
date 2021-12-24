@@ -1,20 +1,35 @@
+import { Helmet } from 'react-helmet-async';
+import PageHeader from './PageHeader';
+import PageTitleWrapper from '@components/pages/PageTitleWrapper';
+import { Grid, Container } from '@mui/material';
 
-import { Button } from '@mui/material';
-import { useNavigate } from "react-router-dom";
+import RecentOrders from './RecentOrders';
+import Footer from '@components/layout/Footer';
 
 export const Resume = () => {
-
-  const navigate = useNavigate();
-
   return (
     <>
-      <Button
-        variant='contained'
-        sx={{ margin: "5rem" }}
-        onClick={() => navigate("/signin")}
-      >
-        Sair
-      </Button>
+      <Helmet>
+        <title>Gestão - Cadastrados</title>
+      </Helmet>
+      <PageTitleWrapper>
+        <PageHeader />
+      </PageTitleWrapper>
+      <Container maxWidth="lg">
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="stretch"
+          spacing={3}
+        >
+          <Grid item xs={12}>
+            <RecentOrders />
+          </Grid>
+        </Grid>
+      </Container>
+      <Footer />
     </>
-  )
-};
+  );
+}
+
