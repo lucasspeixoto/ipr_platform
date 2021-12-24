@@ -1,73 +1,69 @@
-import { ReactNode } from "react";
-
-import DesignServicesTwoToneIcon from "@mui/icons-material/DesignServicesTwoTone";
-import BrightnessLowTwoToneIcon from "@mui/icons-material/BrightnessLowTwoTone";
-import MmsTwoToneIcon from "@mui/icons-material/MmsTwoTone";
-import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
-import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
-
 export interface MenuItem {
-  name: string;
-  link: string;
-  icon: ReactNode;
+	name: string;
+	link: string;
 }
 
 export interface MenuItems {
-  items: MenuItem[];
-  heading: string;
+	items: MenuItem[];
+	heading: string;
 }
 
 const menuItems: MenuItems[] = [
-  {
-    heading: "",
-    items: [
-      {
-        name: "Overview",
-        link: "/overview",
-        icon: DesignServicesTwoToneIcon,
-      },
-    ],
-  },
-  {
-    heading: "Cadastro",
-    items: [
-      {
-        name: "Dados Pessoais",
-        link: "/registration/personal",
-        icon: BrightnessLowTwoToneIcon,
-      },
-      {
-        name: "Dados Complementares",
-        link: "/registration/supplementary",
-        icon: MmsTwoToneIcon,
-      },
-      {
-        name: "Dados Eclesiásticos",
-        link: "/registration/ecclesiastical",
-        icon: MmsTwoToneIcon,
-      },
-    ],
-  },
-  {
-    heading: "Área Administrativa",
-    items: [
-      {
-        name: "Listagem de membros",
-        link: "/admin/detail",
-        icon: TableChartTwoToneIcon,
-      },
-      {
-        name: "Estatisticas",
-        link: "/admin/statistics",
-        icon: AccountCircleTwoToneIcon,
-      },
-      {
-        name: "Dados",
-        link: "/admin/data",
-        icon: AccountCircleTwoToneIcon,
-      },
-    ],
-  },
+	{
+		heading: 'Cadastro',
+		items: [
+			{
+				name: 'Dados Pessoais',
+				link: '/registration/personal',
+			},
+			{
+				name: 'Dados Complementares',
+				link: '/registration/supplementary',
+			},
+			{
+				name: 'Dados Eclesiásticos',
+				link: '/registration/ecclesiastical',
+			},
+		],
+	},
+	{
+		heading: 'Gestão de Membros',
+		items: [
+			{
+				name: 'Listagem de membros',
+				link: '/admin/detail',
+			},
+			{
+				name: 'Estatisticas',
+				link: '/admin/statistics',
+			},
+			{
+				name: 'Dados',
+				link: '/admin/data',
+			},
+		],
+	},
+	{
+		heading: 'Controle Financeiro',
+		items: [
+			{
+				name: 'Cadastro',
+				link: '/finance/register',
+			},
+			{
+				name: 'Entradas',
+				link: '/finance/gains',
+			},
+			{
+				name: 'Saidas',
+				link: '/finance/expenses',
+			},
+			{
+				name: 'Dashboards',
+				link: '/finance/dashboards',
+			},
+		],
+	},
 ];
 
 export default menuItems;

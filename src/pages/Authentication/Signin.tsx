@@ -1,220 +1,253 @@
-import React from "react";
+import { useState } from 'react';
 
-import { Button, Divider, Stack, TextField } from "@mui/material";
+import Paper from '@mui/material/Paper';
 
-import Link from "@mui/material/Link";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import LoginBackground from '@assets/bg-sign-in-basic.jpeg';
 
-import Typography, { TypographyProps } from "@mui/material/Typography";
-import { useNavigate } from "react-router-dom";
+import { Button, TextField } from '@mui/material';
 
-import { useTheme } from "@mui/material/styles";
+import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
-import LoginIcon from "@mui/icons-material/Login";
-import GoogleIcon from "@mui/icons-material/Google";
+import Typography, { TypographyProps } from '@mui/material/Typography';
 
-import LoginBackground from "@assets/bg-sign-in-basic.jpeg";
+import LoginIcon from '@mui/icons-material/Login';
+import GoogleIcon from '@mui/icons-material/Google';
 
-import { styled } from "@mui/material/styles";
+import { styled } from '@mui/material/styles';
+
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { Messages } from '@core/helpers/Messages';
+import { useAuth } from '@hooks/useAuth';
+import { ILoginData } from '@core/types/ILogin.model';
+import { Error } from '@core/helpers/ErrorMessages';
+
+import { Link as RouterLink } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 function Copyright(props: TypographyProps) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {"Copyright © "}
-      <Link
-        color='primary'
-        target='_blank'
-        href='https://www.igrejapentecostalreformada.com.br/'
-      >
-        Igreja Pentecostal Reformada
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
+	return (
+		<Typography
+			variant='body2'
+			color='text.secondary'
+			align='center'
+			{...props}
+		>
+			{'Copyright © '}
+			<Link
+				color='primary'
+				href='https://www.igrejapentecostalreformada.com.br/'
+			>
+				Igreja Pentecostal Reformada
+			</Link>{' '}
+			{new Date().getFullYear()}
+			{'.'}
+		</Typography>
+	);
 }
 
 const LoginButton = styled(Button)(
-  ({ theme }) => `
+	({ theme }) => `
+      font-size: 15px;
       background: ${theme.colors.primary.main};
       color: ${theme.palette.primary.contrastText};
       box-shadow: ${theme.colors.shadows.primary};
-      margin-top: .7rem;
-      margin-bottom: .7rem;
       &:hover {
         background: ${theme.colors.primary.dark};
       }
-`
+`,
 );
 
 const LoginWithGoogleButton = styled(Button)(
-  ({ theme }) => `
-      
+	({ theme }) => `
+      font-size: 15px;
       box-shadow: ${theme.colors.shadows.primary};
-      margin-top: .7rem;
-      margin-bottom: .7rem;
-     
       .MuiButton-endIcon {
         color: ${theme.palette.error.contrastText}
       },
-`
+`,
 );
 
-const AuthBackgroundImage = styled((props) => (
-  <Grid item xs={false} sm={4} md={7} {...props} />
+const AuthBackgroundImage = styled(props => (
+	<Grid item xs={false} sm={4} md={8} {...props} />
 ))(({ theme }) => ({
-  backgroundImage: `url(${LoginBackground})`,
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
+	backgroundImage: `url(${LoginBackground})`,
+	backgroundRepeat: 'no-repeat',
+	backgroundSize: 'cover',
+	backgroundPosition: 'center',
 }));
 
+const schema = yup
+	.object({
+		email: yup
+			.string()
+			.required(Messages.required)
+			.matches(
+				/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/,
+				Messages.invalidemail,
+			),
+		password: yup
+			.string()
+			.trim()
+			.required(Messages.required)
+			.min(5, Messages.min),
+	})
+	.required();
+
 export const Signin = () => {
-  const navigate = useNavigate();
-  const theme = useTheme();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<ILoginData>({
+		resolver: yupResolver(schema),
+	});
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+	//const navigate = useNavigate();
 
-    // eslint-disable-next-line no-console
-    navigate("/dashboard");
-  };
+	const { user, signInWithGoogle, signInWithEmailAndPassword } = useAuth();
+	const [showPassword, setShowPassword] = useState(false);
 
-  return (
-    <Grid container direction='row' sx={{ height: "100vh" }}>
-      {/* Background Image */}
-      <AuthBackgroundImage />
+	const handleClickShowPassword = () => setShowPassword(!showPassword);
+	const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
-      {/* Form */}
-      <Grid item container justifyContent='center' xs={12} sm={8} md={5}>
-        <Box
-          sx={{
-            my: 2,
-            mx: 4,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            maxWidth: "100%",
-          }}
-        >
-          <Typography component='h1' variant='h2'>
-            Login
-          </Typography>
-          <Box
-            component='form'
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
-          >
-            <Grid item xs={12}>
-              <TextField
-                margin='normal'
-                required
-                fullWidth
-                id='email'
-                label='Email'
-                name='email'
-                autoComplete='email'
-                autoFocus
-              />
-              <TextField
-                margin='normal'
-                required
-                fullWidth
-                name='password'
-                label='Senha'
-                type='password'
-                id='password'
-                autoComplete='current-password'
-              />
+	const loginWithEmailAndPassword = async (data: ILoginData) => {
+		const { email, password } = data;
 
-              <LoginButton
-                variant='contained'
-                type='submit'
-                fullWidth
-                endIcon={<LoginIcon />}
-              >
-                Entrar
-              </LoginButton>
-            </Grid>
+		try {
+			await signInWithEmailAndPassword(email, password);
+		} catch (error) {
+			const code: string = error.code;
+			alert(Error[code]);
+		} 
+	};
 
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  alignItems: "center",
-                  display: "flex",
-                }}
-              >
-                <Divider sx={{ flexGrow: 1 }} orientation='horizontal' />
+	function loginWithGoogle() {
+		if (!user) {
+			signInWithGoogle();
+		}
+	}
 
-                <Button
-                  variant='outlined'
-                  sx={{
-                    cursor: "unset",
-                    m: 1,
-                    py: 0.5,
-                    px: 7,
-                    borderColor: `${theme.palette.grey[500]} !important`,
-                    color: `${theme.palette.primary.contrastText}!important`,
-                    fontWeight: 300,
-                    borderRadius: `10px`,
-                  }}
-                  disableRipple
-                  disabled
-                >
-                  Ou
-                </Button>
+	return (
+		<>
+			<Helmet>
+				<title>Login</title>
+			</Helmet>
+			<Grid container component='main' sx={{ height: '100vh' }}>
+				<AuthBackgroundImage />
 
-                <Divider sx={{ flexGrow: 1 }} orientation='horizontal' />
-              </Box>
-            </Grid>
+				<Grid item xs={12} sm={8} md={4} component={Paper} square>
+					<Box
+						sx={{
+							my: 8,
+							mx: 4,
+							display: 'flex',
+							flexDirection: 'column',
+							alignItems: 'center',
+						}}
+					>
+						<Typography variant='h1'>Login</Typography>
+						<Box
+							component='form'
+							noValidate
+							onSubmit={handleSubmit(loginWithEmailAndPassword)}
+							sx={{ mt: 1 }}
+						>
+							<TextField
+								margin='normal'
+								required
+								fullWidth
+								id='email'
+								label='Email'
+								name='email'
+								autoComplete='email'
+								autoFocus
+								{...register('email')}
+								error={errors.email?.message !== undefined}
+								helperText={errors.email?.message}
+							/>
+							<TextField
+								margin='normal'
+								required
+								fullWidth
+								label='Senha'
+								type={showPassword ? 'text' : 'password'}
+								id='password'
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position='end'>
+											<IconButton
+												aria-label='toggle password visibility'
+												onClick={handleClickShowPassword}
+												onMouseDown={handleMouseDownPassword}
+											>
+												{showPassword ? <Visibility /> : <VisibilityOff />}
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+								autoComplete='current-password'
+								{...register('password')}
+								error={errors.password?.message !== undefined}
+								helperText={errors.password?.message}
+							/>
 
-            <Grid item>
-              <LoginWithGoogleButton
-                variant='contained'
-                color='secondary'
-                type='button'
-                fullWidth
-                endIcon={<GoogleIcon />}
-                onClick={() => alert("google")}
-              >
-                Login com Google
-              </LoginWithGoogleButton>
-            </Grid>
-
-            <Grid item>
-              <Stack
-                direction='row'
-                alignItems='center'
-                justifyContent='space-between'
-                spacing={1}
-              >
-                <Typography
-                  variant='subtitle1'
-                  color='secondary'
-                  sx={{ textDecoration: "none", cursor: "pointer" }}
-                >
-                  Esqueceu a senha?
-                </Typography>
-                <Typography
-                  variant='subtitle1'
-                  color='secondary'
-                  sx={{ textDecoration: "none", cursor: "pointer" }}
-                >
-                  Criar Conta?
-                </Typography>
-              </Stack>
-            </Grid>
-            <Copyright sx={{ mt: 20 }} />
-          </Box>
-        </Box>
-      </Grid>
-    </Grid>
-  );
+							<LoginButton
+								type='submit'
+								fullWidth
+								variant='contained'
+								endIcon={<LoginIcon />}
+								onClick={() => alert('entrar')}
+								sx={{ mt: 3, mb: 2 }}
+							>
+								Entrar
+							</LoginButton>
+							<LoginWithGoogleButton
+								variant='contained'
+								color='secondary'
+								type='button'
+								fullWidth
+								endIcon={<GoogleIcon />}
+								onClick={() => loginWithGoogle()}
+								sx={{ mt: 3, mb: 2 }}
+							>
+								Login com Google
+							</LoginWithGoogleButton>
+							<Grid container>
+								<Grid item xs>
+									<Typography
+										variant='h6'
+										sx={{ cursor: 'pointer' }}
+										component={RouterLink}
+										to='/forgot-password'
+									>
+										Esqueceu a senha ?
+									</Typography>
+								</Grid>
+								<Grid item>
+									<Typography
+										variant='h6'
+										sx={{ cursor: 'pointer' }}
+										component={RouterLink}
+										to='/signup'
+									>
+										Criar Conta
+									</Typography>
+								</Grid>
+							</Grid>
+							<Copyright sx={{ mt: 15 }} />
+						</Box>
+					</Box>
+				</Grid>
+			</Grid>
+		</>
+	);
 };

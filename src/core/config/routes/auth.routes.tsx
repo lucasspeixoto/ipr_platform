@@ -1,22 +1,23 @@
-import BaseLayout from "../../../components/layout/BaseLayout";
+import BaseLayout from "@components/layout/BaseLayout";
 import { Navigate } from "react-router-dom";
 
-import { Signin } from "../../../pages/Authentication/Signin";
+import { Signin } from "@pages/authentication/Signin";
 
-import { Suspense, lazy } from "react";
-import SuspenseLoader from "./../../../components/pages/SuspenseLoader/index";
+/* import { Suspense, lazy } from "react";
+import SuspenseLoader from "@components/pages/SuspenseLoader/index"; */
 
 import { RouteObject } from "react-router";
-import { Signup } from "../../../pages/Authentication/Signup";
+import { Signup } from "@pages/authentication/Signup";
+import { ForgotPassword } from "@pages/authentication/ForgotPassword";
 
-const Loader = (Component) => (props) =>
+/* const Loader = (Component) => (props) =>
   (
     <Suspense fallback={<SuspenseLoader />}>
       <Component {...props} />
     </Suspense>
   );
 
-const Status404 = Loader(lazy(() => import("./../../../pages/Status404")));
+const Status404 = Loader(lazy(() => import("./../../../pages/Status404"))); */
 
 export const authRoutes: RouteObject[] = [
   {
@@ -25,10 +26,6 @@ export const authRoutes: RouteObject[] = [
     children: [
       {
         path: "",
-        element: <Navigate to='login' replace />,
-      },
-      {
-        path: "login",
         element: <Signin />,
       },
       {
@@ -36,8 +33,12 @@ export const authRoutes: RouteObject[] = [
         element: <Signup />,
       },
       {
+        path: "forgot-password",
+        element: <ForgotPassword />,
+      },
+      {
         path: "*",
-        element: <Status404 />,
+        element: <Navigate to='' replace />,
       },
     ],
   },

@@ -5,6 +5,7 @@
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/core/hooks/*"],
       "@pages/*": ["./src/pages/*"],
+      "@core/*": ["./src/core/*"],
       "@contexts/*": ["./src/core/contexts/*"],
       "@services/*": ["./src/core/services/*"],
       "@helpers/*": ["./src/core/helpers/*"],

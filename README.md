@@ -8,6 +8,13 @@
 
 [Ipr Manager](https://github.com/lucasspeixoto/ipr-platform) é um aplicativo para cadastro de membros e acompanhamento de estatiscas desses cadastros da [Igreja Pentecostal Reformada](https://www.igrejapentecostalreformada.com.br/)
 
+<br>
+
+## 🔖 Layout
+
+![interface](src/assets/layout.png 'Layout Atual')
+
+
 ## ✨ Tecnologias
 
 O projeto Foi desenvolvido com as seguintes tecnologias:
