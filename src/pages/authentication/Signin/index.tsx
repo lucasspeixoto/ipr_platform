@@ -6,11 +6,10 @@ import LoginBackground from '@assets/bg-sign-in-basic.jpeg';
 
 import { Button, TextField } from '@mui/material';
 
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import Typography, { TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 
 import LoginIcon from '@mui/icons-material/Login';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -32,39 +31,9 @@ import { Error } from '@core/helpers/ErrorMessages';
 
 import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { Copyright } from './../Copyright';
+import { AuthButton } from '../AuthButton';
 
-function Copyright(props: TypographyProps) {
-	return (
-		<Typography
-			variant='body2'
-			color='text.secondary'
-			align='center'
-			{...props}
-		>
-			{'Copyright © '}
-			<Link
-				color='primary'
-				href='https://www.igrejapentecostalreformada.com.br/'
-			>
-				Igreja Pentecostal Reformada
-			</Link>{' '}
-			{new Date().getFullYear()}
-			{'.'}
-		</Typography>
-	);
-}
-
-const LoginButton = styled(Button)(
-	({ theme }) => `
-      font-size: 15px;
-      background: ${theme.colors.primary.main};
-      color: ${theme.palette.primary.contrastText};
-      box-shadow: ${theme.colors.shadows.primary};
-      &:hover {
-        background: ${theme.colors.primary.dark};
-      }
-`,
-);
 
 const LoginWithGoogleButton = styled(Button)(
 	({ theme }) => `
@@ -110,8 +79,6 @@ export const Signin = () => {
 	} = useForm<ILoginData>({
 		resolver: yupResolver(schema),
 	});
-
-	//const navigate = useNavigate();
 
 	const { user, signInWithGoogle, signInWithEmailAndPassword } = useAuth();
 	const [showPassword, setShowPassword] = useState(false);
@@ -200,16 +167,8 @@ export const Signin = () => {
 								helperText={errors.password?.message}
 							/>
 
-							<LoginButton
-								type='submit'
-								fullWidth
-								variant='contained'
-								endIcon={<LoginIcon />}
-								onClick={() => alert('entrar')}
-								sx={{ mt: 3, mb: 2 }}
-							>
-								Entrar
-							</LoginButton>
+							<AuthButton label="Entrar" icon={<LoginIcon />}/>
+					
 							<LoginWithGoogleButton
 								variant='contained'
 								color='secondary'

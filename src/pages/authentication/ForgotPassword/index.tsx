@@ -3,13 +3,12 @@ import Paper from '@mui/material/Paper';
 
 import LoginBackground from '@assets/bg-sign-in-basic.jpeg';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import Typography, { TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 
@@ -25,43 +24,12 @@ import { Error } from '@core/helpers/ErrorMessages';
 
 import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { Copyright } from './../Copyright';
+import { AuthButton } from '../AuthButton';
 
 interface TForgotPasswordForm {
 	email: string;
 }
-
-function Copyright(props: TypographyProps) {
-	return (
-		<Typography
-			variant='body2'
-			color='text.secondary'
-			align='center'
-			{...props}
-		>
-			{'Copyright © '}
-			<Link
-				color='primary'
-				href='https://www.igrejapentecostalreformada.com.br/'
-			>
-				Igreja Pentecostal Reformada
-			</Link>{' '}
-			{new Date().getFullYear()}
-			{'.'}
-		</Typography>
-	);
-}
-
-const LoginButton = styled(Button)(
-	({ theme }) => `
-      font-size: 15px;
-      background: ${theme.colors.primary.main};
-      color: ${theme.palette.primary.contrastText};
-      box-shadow: ${theme.colors.shadows.primary};
-      &:hover {
-        background: ${theme.colors.primary.dark};
-      }
-`,
-);
 
 const AuthBackgroundImage = styled(props => (
 	<Grid item xs={false} sm={4} md={9} {...props} />
@@ -149,18 +117,11 @@ export const ForgotPassword = () => {
 								error={errors.email?.message !== undefined}
 								helperText={errors.email?.message}
 							/>
-							<></>
-
-							<LoginButton
+							<AuthButton
 								disabled={isLoading}
-								type='submit'
-								fullWidth
-								variant='contained'
-								endIcon={<LockOpenIcon />}
-								sx={{ mt: 3, mb: 2 }}
-							>
-								Recuperar
-							</LoginButton>
+								label='Recuperar'
+								icon={<LockOpenIcon />}
+							/>
 
 							<Grid container>
 								<Grid item xs>
