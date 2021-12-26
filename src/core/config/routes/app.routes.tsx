@@ -5,6 +5,7 @@ import { RouteObject } from 'react-router';
 import { Resume } from '@pages/Resume';
 import PageTitleWrapper from '@components/pages/PageTitleWrapper';
 import { Helmet } from 'react-helmet-async';
+import { Personal } from '@pages/Personal';
 
 export const appRoutes: RouteObject[] = [
 	{
@@ -30,16 +31,7 @@ export const appRoutes: RouteObject[] = [
 			},
 			{
 				path: 'personal',
-				element: (
-					<>
-						<Helmet>
-							<title>Cadastro - Dados Pessoais</title>
-						</Helmet>
-						<PageTitleWrapper>
-							<div>Dados Pessoais</div>
-						</PageTitleWrapper>
-					</>
-				),
+				element: <Personal />,
 			},
 			{
 				path: 'supplementary',

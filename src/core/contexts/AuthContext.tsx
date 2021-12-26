@@ -1,4 +1,4 @@
-import { User } from '@core/types/IUser.model';
+import { IUser } from '@core/types/IUser.model';
 import { createContext, useState, useEffect } from 'react';
 
 import { auth as fireauth, firebase, firestore } from '@services/Firebase';
@@ -6,7 +6,7 @@ import { auth as fireauth, firebase, firestore } from '@services/Firebase';
 type AuthContextType = {
 	isLogged: boolean;
 	isLoading: boolean;
-	user: User | undefined;
+	user: IUser | undefined;
 	signInWithGoogle: () => Promise<void>;
 	signInWithEmailAndPassword: (
 		email: string,
@@ -24,7 +24,7 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType);
 
 export const AuthContextProvider: React.FC = ({ children }) => {
-	const [user, setUser] = useState<User>();
+	const [user, setUser] = useState<IUser>();
 	const [isLoading, setIsLoading] = useState(true);
 	const [isLogged, setIsLogged] = useState(false);
 
@@ -62,9 +62,9 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 		};
 	}, []);
 
-	const registerUser = async (loggedUser: User) => {
+	const registerUser = async (loggedUser: IUser) => {
 		if (loggedUser) {
-			const url = `users/${loggedUser.id}`;
+			const url = `users/${loggedUser.userId}`;
 			const authRef = firestore.doc(url);
 			const addAuth = { auth: { ...loggedUser } };
 			await authRef.set(addAuth, { merge: true });
@@ -79,11 +79,11 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 		if (result.user) {
 			const { displayName, email, photoURL, uid } = result.user;
 
-			const loggedUser: User = {
-				id: uid,
+			const loggedUser: IUser = {
+				userId: uid,
 				name: displayName,
 				email: email,
-				avatar: photoURL,
+				photoUrl: photoURL,
 			};
 
 			setUser(loggedUser);
@@ -116,11 +116,11 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 			result.user.sendEmailVerification();
 			const { email, uid } = result.user;
 
-			const loggedUser: User = {
-				id: uid,
+			const loggedUser: IUser = {
+				userId: uid,
 				name: name,
 				email: email,
-				avatar: '',
+				photoUrl: '',
 			};
 
 			setUser(loggedUser);
@@ -134,9 +134,9 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 	}
 
 	async function logout() {
+		await fireauth.signOut();
 		setIsLogged(false);
 		setUser(undefined);
-		await fireauth.signOut();
 	}
 
 	return (

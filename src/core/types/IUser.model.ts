@@ -1,6 +1,13 @@
-export interface User {
-	id: string;
-	name: string | null;
-  email: string | null;
-	avatar: string | null;
+
+export class IUser {
+	static fromDataBase({ name, userId, email, photoUrl }) {
+		return new IUser(name, userId, email, photoUrl);
+	}
+
+	constructor(
+		public name: string,
+		public userId: string,
+		public email: string,
+		public photoUrl: string,
+	) {}
 }

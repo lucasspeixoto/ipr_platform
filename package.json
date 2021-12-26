@@ -1,6 +1,6 @@
 {
   "name": "ipr_platform",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@emotion/css": "^11.7.1",
@@ -29,6 +29,7 @@
     "react-chartjs-2": "^4.0.0",
     "react-custom-scrollbars-2": "^4.4.0",
     "react-dom": "^17.0.2",
+    "react-draggable": "^4.4.4",
     "react-helmet-async": "^1.2.2",
     "react-hook-form": "^7.22.3",
     "react-router": "^6.2.1",
@@ -40,7 +41,6 @@
   },
   "scripts": {
     "tsc": "./node_modules/.bin/tsc",
-    "local": "set PORT=3006 && set REACT_APP_STAGE=local && craco start",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",

@@ -1,0 +1,58 @@
+export class IPersonal {
+	static fromDataBase({
+		name,
+		sex,
+		birth_date,
+		cep,
+		state,
+		address,
+		complement,
+		city,
+		district,
+		number,
+		rg,
+		cpf,
+		email,
+		cellphone,
+		telephone,
+		naturalness,
+	}) {
+		return new IPersonal(
+			name,
+			sex,
+			birth_date,
+			cep,
+			state,
+			address,
+			complement,
+			city,
+			district,
+			number,
+			rg,
+			cpf,
+			email,
+			cellphone,
+			telephone,
+			naturalness,
+		);
+	}
+
+	constructor(
+		public name: string,
+		public sex: string,
+		public birth_date: string,
+		public cep: string,
+		public state: string,
+		public address: string,
+		public complement: string,
+		public city: string,
+		public district: string,
+		public number: number,
+		public rg: string,
+		public cpf: string,
+		public email: string,
+		public cellphone: string,
+		public telephone: string,
+		public naturalness: string,
+	) {}
+}

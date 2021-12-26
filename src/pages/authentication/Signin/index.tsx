@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import Paper from '@mui/material/Paper';
 
@@ -33,9 +33,9 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Copyright } from './../Copyright';
 import { AuthButton } from '../AuthButton';
+import { ThemeSwitch } from '@components/layout/SidebarLayout/Toggle';
 
 import { ThemeContext } from '@core/config/theme/schemes/ThemeProvider';
-
 
 const LoginWithGoogleButton = styled(Button)(
 	({ theme }) => `
@@ -49,7 +49,7 @@ const LoginWithGoogleButton = styled(Button)(
 );
 
 const AuthBackgroundImage = styled(props => (
-	<Grid item xs={false} sm={4} md={8} {...props} />
+	<Grid item container xs={false} sm={4} md={8} {...props} />
 ))(({ theme }) => ({
 	backgroundImage: `url(${LoginBackground})`,
 	backgroundRepeat: 'no-repeat',
@@ -83,8 +83,6 @@ export const Signin: React.FC = () => {
 		resolver: yupResolver(schema),
 	});
 
-	const { setThemeName } = useContext(ThemeContext);
-
 	const { user, signInWithGoogle, signInWithEmailAndPassword } = useAuth();
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -99,16 +97,29 @@ export const Signin: React.FC = () => {
 		} catch (error) {
 			const code: string = error.code;
 			alert(Error[code]);
-		} 
+		}
 	};
 
-	function loginWithGoogle() {
-
-		setThemeName('PureLightTheme')
+	const loginWithGoogle = () => {
 		if (!user) {
 			signInWithGoogle();
 		}
-	}
+	};
+
+	const { themeName, setThemeName } = useContext(ThemeContext);
+
+	const [darkTheme, setDarkTheme] = useState(() =>
+		themeName === 'NebulaFighterTheme' ? true : false,
+	);
+
+	const handleChangeTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setDarkTheme(event.target.checked);
+		if (darkTheme) {
+			setThemeName('PureLightTheme');
+		} else {
+			setThemeName('NebulaFighterTheme');
+		}
+	};
 
 	return (
 		<>
@@ -119,9 +130,11 @@ export const Signin: React.FC = () => {
 				<AuthBackgroundImage />
 
 				<Grid item xs={12} sm={8} md={4} component={Paper} square>
+					<ThemeSwitch checked={darkTheme} onChange={handleChangeTheme} />
+
 					<Box
 						sx={{
-							my: 8,
+							my: 6,
 							mx: 4,
 							display: 'flex',
 							flexDirection: 'column',
@@ -174,8 +187,8 @@ export const Signin: React.FC = () => {
 								helperText={errors.password?.message}
 							/>
 
-							<AuthButton label="Entrar" icon={<LoginIcon />}/>
-					
+							<AuthButton label='Entrar' icon={<LoginIcon />} />
+
 							<LoginWithGoogleButton
 								variant='contained'
 								color='secondary'
