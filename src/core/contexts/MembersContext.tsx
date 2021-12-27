@@ -10,6 +10,7 @@ export interface IUsersContext {
 	isLoading: boolean;
 	membersTotal: Partial<IMember>[] | undefined;
 	membersDetails: IMemberDetail[] | undefined;
+	activeMember: Partial<IMember> | undefined;
 	deleteMember: (id: string) => Promise<void>;
 }
 
@@ -19,7 +20,7 @@ export const MembersContextProvider: React.FC = ({ children }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [membersTotal, setMembersTotal] = useState<Partial<IMember>[]>();
 	const [membersDetails, setMembersDetails] = useState<IMemberDetail[]>();
-
+	const [activeMember, setActiveMember] = useState<Partial<IMember>>();
 	const { user } = useAuth();
 
 	const membersDetailsHandler = (listOfMembers: Partial<IMember>[]) => {
@@ -39,6 +40,9 @@ export const MembersContextProvider: React.FC = ({ children }) => {
 				if (value) {
 					value.forEach(doc => {
 						const item: Partial<IMember> = doc.data();
+						if (item.auth.userId === user.userId) {
+							setActiveMember(item);
+						}
 						listOfMembers.push(item);
 					});
 				}
@@ -50,11 +54,11 @@ export const MembersContextProvider: React.FC = ({ children }) => {
 		}
 	}, [user, isLoading]);
 
-	async function deleteMember(userId: string) {
+	const deleteMember = async (userId: string) => {
 		setIsLoading(true);
 		await firestore.doc(`users/${userId}/`).delete();
 		setIsLoading(false);
-	}
+	};
 
 	return (
 		<MembersContext.Provider
@@ -62,6 +66,7 @@ export const MembersContextProvider: React.FC = ({ children }) => {
 				isLoading,
 				membersTotal,
 				membersDetails,
+				activeMember,
 				deleteMember,
 			}}
 		>

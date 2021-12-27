@@ -1,13 +1,13 @@
 import { IMember } from '@core/types/IMember';
 import { IMemberDetail } from '@core/types/IMemberDetail';
 
-const getStatus = (member: Partial<IMember>): string => {
+export const getStatus = (member: Partial<IMember>): string => {
 	if (member.personal && member.ecclesiastical && member.supplementary) {
 		return 'completed';
 	} else if (!member.process) {
-		return 'failed';
-	} else {
 		return 'pending';
+	} else {
+		return 'incomplete';
 	}
 };
 

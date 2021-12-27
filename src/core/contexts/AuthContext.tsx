@@ -69,7 +69,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 			const addAuth = { auth: { ...loggedUser } };
 			await authRef.set(addAuth, { merge: true });
 		}
-	}
+	};
 
 	const signInWithGoogle = async () => {
 		const provider = new firebase.auth.GoogleAuthProvider();
@@ -110,8 +110,6 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 			password,
 		);
 
-		console.log(result);
-
 		if (result.user) {
 			result.user.sendEmailVerification();
 			const { email, uid } = result.user;
@@ -129,15 +127,15 @@ export const AuthContextProvider: React.FC = ({ children }) => {
 		}
 	};
 
-	async function sendPasswordResetEmail(email: string) {
+	const sendPasswordResetEmail = async (email: string) => {
 		return await fireauth.sendPasswordResetEmail(email);
-	}
+	};
 
-	async function logout() {
+	const logout = async () => {
 		await fireauth.signOut();
 		setIsLogged(false);
 		setUser(undefined);
-	}
+	};
 
 	return (
 		<AuthContext.Provider

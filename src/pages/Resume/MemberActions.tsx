@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
@@ -32,10 +32,9 @@ export const MemberActions: React.FC<MemberActionsProps> = ({
 }) => {
 	const { deleteMember } = useMembers();
 
-	const [openConfirmation, setOpenConfirmation] = React.useState(false);
+	const [openConfirmation, setOpenConfirmation] = useState(false);
 
 	const openDialogConfirmationQuestion = () => {
-		console.log(selectedMemberId);
 		setOpenConfirmation(true);
 	};
 
@@ -62,6 +61,7 @@ export const MemberActions: React.FC<MemberActionsProps> = ({
 						sx={{ mt: { xs: 2, md: 0 } }}
 						variant='contained'
 						startIcon={<VisibilityIcon fontSize='small' />}
+						disabled
 					>
 						Detalhes
 					</Button>

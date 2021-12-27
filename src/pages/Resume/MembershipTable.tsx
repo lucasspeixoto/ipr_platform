@@ -38,7 +38,7 @@ interface Filters {
 
 const getStatusLabel = (memberStatus: string): JSX.Element => {
 	const map = {
-		failed: {
+		pending: {
 			text: 'Pendente',
 			color: 'error',
 		},
@@ -46,7 +46,7 @@ const getStatusLabel = (memberStatus: string): JSX.Element => {
 			text: 'Completo',
 			color: 'success',
 		},
-		pending: {
+		incomplete: {
 			text: 'Incompleto',
 			color: 'warning',
 		},
@@ -99,11 +99,11 @@ export const MembersTable: React.FC<MemberTableProps> = ({ members }) => {
 			name: 'Completo',
 		},
 		{
-			id: 'pending',
+			id: 'incomplete',
 			name: 'Incompleto',
 		},
 		{
-			id: 'failed',
+			id: 'pending',
 			name: 'Pendente',
 		},
 	];

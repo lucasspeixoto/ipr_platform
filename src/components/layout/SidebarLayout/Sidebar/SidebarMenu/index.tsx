@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import { NavLink as RouterLink } from 'react-router-dom';
 
 import { Button, ListItem } from '@mui/material';
+import AccountBoxTwoToneIcon from '@mui/icons-material/AccountBoxTwoTone';
 import PersonIcon from '@mui/icons-material/Person';
 import ChurchIcon from '@mui/icons-material/Church';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
@@ -22,6 +23,7 @@ import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import { SidebarContext } from '@contexts/SidebarContext';
 
 const icons = {
+  '/registration/resume': <AccountBoxTwoToneIcon/>,
 	'/registration/personal': <ContactPhoneIcon />,
 	'/registration/supplementary': <PersonIcon />,
 	'/registration/ecclesiastical': <ChurchIcon />,
@@ -61,7 +63,8 @@ const SubMenuWrapper = styled(List)(
 
       .MuiList-root .MuiList-root .MuiListItem-root .MuiButton-root {
         font-weight: normal !important;
-      }
+      }import { AccountBoxTwoToneIcon } from '@mui/icons-material/AccountBoxTwoTone';
+
 
       .MuiListItem-root {
         padding: 2px ${theme.spacing(2)};

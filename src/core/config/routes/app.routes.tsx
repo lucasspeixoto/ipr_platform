@@ -3,9 +3,8 @@ import { Navigate } from 'react-router-dom';
 
 import { RouteObject } from 'react-router';
 import { Resume } from '@pages/Resume';
-import PageTitleWrapper from '@components/pages/PageTitleWrapper';
-import { Helmet } from 'react-helmet-async';
 import { Personal } from '@pages/Personal';
+import { UserProfile } from '@pages/Profile/index';
 
 export const appRoutes: RouteObject[] = [
 	{
@@ -19,14 +18,7 @@ export const appRoutes: RouteObject[] = [
 			{
 				path: 'resume',
 				element: (
-					<>
-						<Helmet>
-							<title>Cadastro - Resumo</title>
-						</Helmet>
-						<PageTitleWrapper>
-							<div>Resumo</div>
-						</PageTitleWrapper>
-					</>
+					<UserProfile/>
 				),
 			},
 			{
