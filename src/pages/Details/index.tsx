@@ -1,38 +1,37 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-
+import { PageHeader } from './PageHeader';
+import PageTitleWrapper from '@components/pages/PageTitleWrapper';
 import { Grid, Container } from '@mui/material';
 
-import { ProfileCover } from './ProfileCover';
-
 import Footer from '@components/layout/Footer';
+import { Membership } from './Membership';
 import { useMembers } from '@hooks/useMembers';
 import { SuspenseLoader } from '@components/pages/SuspenseLoader/index';
-import { ProfileData } from './ProfileData';
 
-export const UserProfile = () => {
-  const { activeMember } = useMembers();
+export const Details = () => {
+  const { isLoading } = useMembers();
 
   return (
     <>
-      {activeMember ? (
+      {!isLoading ? (
         <React.Fragment>
           <Helmet>
-            <title>Meu Perfil</title>
+            <title>Gestão - Cadastrados</title>
           </Helmet>
-          <Container sx={{ mt: 3 }} maxWidth="xl">
+          <PageTitleWrapper>
+            <PageHeader />
+          </PageTitleWrapper>
+          <Container maxWidth="lg">
             <Grid
               container
               direction="row"
               justifyContent="center"
-              alignItems="center"
+              alignItems="stretch"
               spacing={3}
             >
-              <Grid item xs={12} md={10}>
-                <ProfileCover user={activeMember} />
-              </Grid>
-              <Grid item xs={12} md={10}>
-                <ProfileData data={activeMember}/>
+              <Grid item xs={12}>
+                <Membership />
               </Grid>
             </Grid>
           </Container>

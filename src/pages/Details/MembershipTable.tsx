@@ -260,7 +260,7 @@ export const MembersTable: React.FC<MemberTableProps> = ({ members }) => {
 											>
 												{member.birth_date
 													? format(parseISO(member.birth_date), "dd/MM/yyyy'")
-													: 'NI'}
+													: ''}
 											</Typography>
 										</Typography>
 									</TableCell>

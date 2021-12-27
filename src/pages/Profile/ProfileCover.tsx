@@ -68,7 +68,6 @@ const CardCover = styled(Card)(
 );
 
 export const ProfileCover = ({ user }) => {
-  
   return (
     <>
       <Box display="flex" mb={3}>
@@ -105,43 +104,15 @@ export const ProfileCover = ({ user }) => {
           </label>
         </ButtonUploadWrapper>
       </AvatarWrapper>
-      <Box py={2} pl={2} mb={3}>
+      <Box py={2} pl={2} mb={1}>
         <Typography gutterBottom variant="h4">
           {user.auth.name}
         </Typography>
         <Typography variant="subtitle2">{user.description}</Typography>
         <Typography sx={{ py: 2 }} variant="subtitle2" color="text.primary">
-          {user.ecclesiastical.craft} | {user.personal.city}-{user.personal.state} |{' '}
-          {user.ecclesiastical.membership}
+          {user.ecclesiastical.craft} | {user.personal.city}-
+          {user.personal.state} | {user.ecclesiastical.membership}
         </Typography>
-        {/* <Box
-          display={{ xs: 'block', md: 'flex' }}
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Box>
-            <Button size="small" variant="contained">
-              Follow
-            </Button>
-            <Button size="small" sx={{ mx: 1 }} variant="outlined">
-              View website
-            </Button>
-            <IconButton color="primary" sx={{ p: 0.5 }}>
-              <MoreHorizTwoToneIcon />
-            </IconButton>
-          </Box>
-          <Button
-            sx={{ mt: { xs: 2, md: 0 } }}
-            size="small"
-            variant="text"
-            endIcon={<ArrowForwardTwoToneIcon />}
-          >
-            See all {' '}
-            {user.followers}
-            {' '}
-            connections
-          </Button>
-        </Box> */}
       </Box>
     </>
   );

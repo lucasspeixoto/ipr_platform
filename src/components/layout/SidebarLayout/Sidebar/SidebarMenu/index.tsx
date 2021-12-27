@@ -23,7 +23,7 @@ import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import { SidebarContext } from '@contexts/SidebarContext';
 
 const icons = {
-  '/registration/resume': <AccountBoxTwoToneIcon/>,
+  '/registration/profile': <AccountBoxTwoToneIcon/>,
 	'/registration/personal': <ContactPhoneIcon />,
 	'/registration/supplementary': <PersonIcon />,
 	'/registration/ecclesiastical': <ChurchIcon />,

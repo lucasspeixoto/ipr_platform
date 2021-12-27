@@ -14,7 +14,7 @@ const menuItems: MenuItems[] = [
     items: [
       {
         name: 'Meu Pefil',
-        link: '/registration/resume'
+        link: '/registration/profile'
       },
       {
         name: 'Dados Pessoais',

@@ -116,7 +116,7 @@ export const HeaderUserbox = () => {
 				</MenuUserBox>
 				<Divider sx={{ mb: 0 }} />
 				<List sx={{ p: 1 }} component='nav'>
-					<ListItem button to='/registration/resume' component={NavLink}>
+					<ListItem button to='/registration/profile' component={NavLink}>
 						<AccountBoxTwoToneIcon fontSize='small' />
 						<ListItemText primary='Meu Perfil' />
 					</ListItem>

@@ -2,7 +2,7 @@ import SidebarLayout from '@components/layout/SidebarLayout';
 import { Navigate } from 'react-router-dom';
 
 import { RouteObject } from 'react-router';
-import { Resume } from '@pages/Resume';
+import { Details } from '@pages/Details';
 import { Personal } from '@pages/Personal';
 import { UserProfile } from '@pages/Profile/index';
 
@@ -13,10 +13,10 @@ export const appRoutes: RouteObject[] = [
 		children: [
 			{
 				path: '',
-				element: <Navigate to='/registration/resume' replace />,
+				element: <Navigate to='/registration/profile' replace />,
 			},
 			{
-				path: 'resume',
+				path: 'profile',
 				element: (
 					<UserProfile/>
 				),
@@ -35,7 +35,7 @@ export const appRoutes: RouteObject[] = [
 			},
 			{
 				path: '*',
-				element: <Navigate to='/registration/resume' replace />,
+				element: <Navigate to='/registration/profile' replace />,
 			},
 		],
 	},
@@ -49,7 +49,7 @@ export const appRoutes: RouteObject[] = [
 			},
 			{
 				path: 'detail',
-				element: <Resume />,
+				element: <Details />,
 			},
 			{
 				path: 'statistics',
@@ -97,6 +97,6 @@ export const appRoutes: RouteObject[] = [
 	},
 	{
 		path: '*',
-		element: <Navigate to='/registration/resume' replace />,
+		element: <Navigate to='/registration/profile' replace />,
 	},
 ];
