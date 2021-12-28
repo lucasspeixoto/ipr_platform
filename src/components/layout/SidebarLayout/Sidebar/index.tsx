@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 
 import { Box, Drawer, Hidden } from '@mui/material';
@@ -7,8 +7,7 @@ import { styled } from '@mui/material/styles';
 import { SidebarMenu } from './SidebarMenu';
 import Logo from '@components/elements/Logo';
 import { SidebarContext } from '@contexts/SidebarContext';
-import { useAuth } from '@hooks/useAuth';
-import { MenuItems, menuItemsAdmin, menuItemsUsers } from './SidebarMenu/items';
+import { menuItemsAdmin } from './SidebarMenu/items';
 
 const SidebarWrapper = styled(Box)(
   ({ theme }) => `
@@ -41,20 +40,6 @@ export const Sidebar: React.FC = () => {
   const { sidebarToggle, toggleSidebar } = useContext(SidebarContext);
   const closeSidebar = () => toggleSidebar();
 
-  const [menuItems, setMenuItems] = useState<MenuItems[]>([]);
-
-  const { user } = useAuth();
-
-  useEffect(() => {
-    if (user) {
-      if (user?.admin) {
-        setMenuItems(menuItemsAdmin);
-      } else {
-        setMenuItems(menuItemsUsers);
-      }
-    }
-  }, [user]);
-
   return (
     <>
       <Hidden lgDown>
@@ -63,7 +48,7 @@ export const Sidebar: React.FC = () => {
             <TopSection>
               <Logo />
             </TopSection>
-            <SidebarMenu menuItems={menuItems} />
+            <SidebarMenu menuItems={menuItemsAdmin} />
           </Scrollbars>
         </SidebarWrapper>
       </Hidden>
@@ -80,7 +65,7 @@ export const Sidebar: React.FC = () => {
               <TopSection>
                 <Logo />
               </TopSection>
-              <SidebarMenu menuItems={menuItems} />
+              <SidebarMenu menuItems={menuItemsAdmin} />
             </Scrollbars>
           </SidebarWrapper>
         </Drawer>

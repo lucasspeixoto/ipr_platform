@@ -28,7 +28,8 @@ export const MembersContextProvider: React.FC = ({ children }) => {
     setIsLoading(true);
     let listOfMembers: Partial<IMember>[] = [];
     if (user) {
-      const result = firestore.collection('users');
+      const result = firestore.collection('users')
+      
       result.onSnapshot((value) => {
         if (value) {
           value.forEach((doc) => {
@@ -41,6 +42,7 @@ export const MembersContextProvider: React.FC = ({ children }) => {
         }
 
         membersDetailsHandler(listOfMembers);
+
       });
 
       setIsLoading(false);
