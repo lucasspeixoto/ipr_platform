@@ -1,4 +1,5 @@
-import { appRoutes } from '@config/routes/app.routes';
+import { usersRoutes } from '@config/routes/users.routes';
+import { adminRoutes } from '@config/routes/admin.routes';
 import { authRoutes } from '@config/routes/auth.routes';
 import { useRoutes } from 'react-router-dom';
 import { useAuth } from '@hooks/useAuth';
@@ -6,23 +7,29 @@ import BaseLayout from '@components/layout/BaseLayout';
 import { SuspenseLoader } from '@components/pages/SuspenseLoader';
 
 export const Routes: React.FC = () => {
-	const app = useRoutes(appRoutes);
+  const users = useRoutes(usersRoutes);
 
-	const auth = useRoutes(authRoutes);
+  const admin = useRoutes(adminRoutes);
 
-	const { isLogged, isLoading } = useAuth();
+  const auth = useRoutes(authRoutes);
 
-	if (isLoading) {
-		return (
-			<BaseLayout>
-				<SuspenseLoader />
-			</BaseLayout>
-		);
-	}
+  const { isLogged, isLoading, user } = useAuth();
 
-	if (isLogged) {
-		return app;
-	} else {
-		return auth;
-	}
+  if (isLoading) {
+    return (
+      <BaseLayout>
+        <SuspenseLoader />
+      </BaseLayout>
+    );
+  }
+
+  if (isLogged) {
+    if (user?.admin) {
+      return admin;
+    } else {
+      return users;
+    }
+  } else {
+    return auth;
+  }
 };

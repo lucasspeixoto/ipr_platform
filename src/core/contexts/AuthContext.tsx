@@ -17,7 +17,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     setIsLogged(true);
     data.docs.forEach((item) => {
       const loggedUser = item.data().auth;
-
+     
       if (loggedUser.userId === userId) {
         setUser(loggedUser);
         setIsLogged(true);
@@ -66,7 +66,8 @@ export const AuthContextProvider: React.FC = ({ children }) => {
         userId: uid,
         name: displayName,
         email: email,
-        photoUrl: photoURL
+        photoUrl: photoURL,
+        admin: false
       };
 
       setUser(loggedUser);
@@ -101,7 +102,8 @@ export const AuthContextProvider: React.FC = ({ children }) => {
         userId: uid,
         name: name,
         email: email,
-        photoUrl: ''
+        photoUrl: '',
+        admin: false
       };
 
       setUser(loggedUser);

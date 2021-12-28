@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { ListSubheader, List } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
-import menuItems from './items';
+import { MenuItems } from './items';
 import { styled } from '@mui/material/styles';
 
 import { NavLink as RouterLink } from 'react-router-dom';
@@ -63,8 +63,7 @@ const SubMenuWrapper = styled(List)(
 
       .MuiList-root .MuiList-root .MuiListItem-root .MuiButton-root {
         font-weight: normal !important;
-      }import { AccountBoxTwoToneIcon } from '@mui/icons-material/AccountBoxTwoTone';
-
+      }
 
       .MuiListItem-root {
         padding: 2px ${theme.spacing(2)};
@@ -147,7 +146,11 @@ const SubMenuWrapper = styled(List)(
 `
 );
 
-function SidebarMenu() {
+interface SideBarMenuProps {
+  menuItems: MenuItems[];
+}
+
+export const SidebarMenu: React.FC<SideBarMenuProps> = ({ menuItems }) => {
   const location = useLocation();
 
   const { toggleSidebar } = useContext(SidebarContext);
@@ -184,6 +187,4 @@ function SidebarMenu() {
       ))}
     </>
   );
-}
-
-export default SidebarMenu;
+};

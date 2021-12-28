@@ -4,11 +4,11 @@ export interface MenuItem {
 }
 
 export interface MenuItems {
-  items: MenuItem[];
   heading: string;
+  items: MenuItem[];
 }
 
-const menuItems: MenuItems[] = [
+export const menuItemsAdmin: MenuItems[] = [
   {
     heading: 'Cadastro',
     items: [
@@ -70,4 +70,28 @@ const menuItems: MenuItems[] = [
   }
 ];
 
-export default menuItems;
+export const menuItemsUsers: MenuItems[] = [
+  {
+    heading: 'Cadastro',
+    items: [
+      {
+        name: 'Meu Perfil',
+        link: '/registration/profile'
+      },
+      {
+        name: 'Dados Pessoais',
+        link: '/registration/personal'
+      },
+      {
+        name: 'Dados Complementares',
+        link: '/registration/supplementary'
+      },
+      {
+        name: 'Dados Eclesiásticos',
+        link: '/registration/ecclesiastical'
+      }
+    ]
+  },
+  
+];
+

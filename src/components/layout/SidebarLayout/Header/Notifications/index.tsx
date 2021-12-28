@@ -1,15 +1,15 @@
 import React, { useMemo } from 'react';
 import {
-	alpha,
-	Badge,
-	Box,
-	Divider,
-	IconButton,
-	List,
-	ListItem,
-	Popover,
-	Tooltip,
-	Typography,
+  alpha,
+  Badge,
+  Box,
+  Divider,
+  IconButton,
+  List,
+  ListItem,
+  Popover,
+  Tooltip,
+  Typography
 } from '@mui/material';
 import { useRef, useState } from 'react';
 import NotificationsActiveTwoToneIcon from '@mui/icons-material/NotificationsActiveTwoTone';
@@ -18,7 +18,7 @@ import { useMembers } from '@hooks/useMembers';
 import { Messages } from '@core/helpers/Messages';
 
 const NotificationsBadge = styled(Badge)(
-	({ theme }) => `
+  ({ theme }) => `
     
     .MuiBadge-badge {
         background-color: ${alpha(theme.palette.error.main, 0.1)};
@@ -28,111 +28,109 @@ const NotificationsBadge = styled(Badge)(
         padding: 0;
 
         &::after {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            box-shadow: 0 0 0 1px ${alpha(theme.palette.error.main, 0.3)};
-            content: "";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+				box-shadow: 0 0 0 1px ${alpha(theme.palette.error.main, 0.3)};
+				content: "";
         }
     }
-`,
+`
 );
 
 export const Notifications: React.FC = () => {
-	const ref = useRef<any>(null);
-	const [isOpen, setOpen] = useState<boolean>(false);
-	const [hasPendency, setHasPendecy] = useState(true);
-	const { activeMember } = useMembers();
+  const ref = useRef<any>(null);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  const [hasPendency, setHasPendecy] = useState(false);
+  const { activeMember } = useMembers();
 
-	const message = useMemo(() => {
-		if (activeMember) {
-			if (
-				activeMember.personal &&
-				activeMember.ecclesiastical &&
-				activeMember.supplementary
-			) {
-				setHasPendecy(false);
-				return 'Cadastro Completo';
-			} else if (!activeMember.process) {
-				setHasPendecy(true);
-				return Messages.pending;
-			} else {
-				setHasPendecy(true);
-				return Messages.incomplete;
-			}
-		}
-	}, [activeMember]);
+  const message = useMemo(() => {
+    if (activeMember) {
+      const { personal, supplementary, ecclesiastical } = activeMember;
 
-	const handleOpen = (): void => {
-		setOpen(true);
-	};
+      if (personal && supplementary && ecclesiastical) {
+        setHasPendecy(false);
+        return Messages.complete;
+      } else if (!personal && !supplementary && !ecclesiastical) {
+        setHasPendecy(true);
+        return Messages.pending;
+      } else {
+        setHasPendecy(true);
+        return Messages.incomplete;
+      }
+    }
+  }, [activeMember]);
 
-	const handleClose = (): void => {
-		setOpen(false);
-	};
+  const handleOpen = (): void => {
+    setOpen(true);
+  };
 
-	return (
-		<>
-			<Tooltip arrow title='Notificações'>
-				<IconButton color='primary' ref={ref} onClick={handleOpen}>
-					<NotificationsBadge
-						badgeContent={hasPendency ? 1 : null}
-						anchorOrigin={{
-							vertical: 'top',
-							horizontal: 'right',
-						}}
-					>
-						<NotificationsActiveTwoToneIcon />
-					</NotificationsBadge>
-				</IconButton>
-			</Tooltip>
-			<Popover
-				anchorEl={ref.current}
-				onClose={handleClose}
-				open={isOpen}
-				anchorOrigin={{
-					vertical: 'top',
-					horizontal: 'right',
-				}}
-				transformOrigin={{
-					vertical: 'top',
-					horizontal: 'right',
-				}}
-			>
-				<Box
-					sx={{ p: 2 }}
-					display='flex'
-					alignItems='center'
-					justifyContent='space-between'
-				>
-					<Typography variant='h5'>Notificações</Typography>
-				</Box>
-				<Divider />
-				<List sx={{ p: 0 }}>
-					<ListItem
-						sx={{ p: 2, minWidth: 350, display: { xs: 'block', sm: 'flex' } }}
-					>
-						<Box flex='1'>
-							<Box display='flex' justifyContent='space-between'>
-								<Typography sx={{ fontWeight: 'bold' }}>
-									Mensagem da Plataforma
-								</Typography>
-							</Box>
-							<Typography
-								component='span'
-								variant='body2'
-								color='text.secondary'
-							>
-								{' '}
-								{hasPendency ? message : 'Nenhuma notificação'}
-							</Typography>
-						</Box>
-					</ListItem>
-				</List>
-			</Popover>
-		</>
-	);
+  const handleClose = (): void => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Tooltip arrow title="Notificações">
+        <IconButton color="primary" ref={ref} onClick={handleOpen}>
+          <NotificationsBadge
+            badgeContent={!hasPendency ? null : 1}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right'
+            }}
+          >
+            <NotificationsActiveTwoToneIcon />
+          </NotificationsBadge>
+        </IconButton>
+      </Tooltip>
+      <Popover
+        anchorEl={ref.current}
+        onClose={handleClose}
+        open={isOpen}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right'
+        }}
+      >
+        <Box
+          sx={{ p: 2 }}
+          display="flex"
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Typography variant="h5">Notificações</Typography>
+        </Box>
+        <Divider />
+        <List sx={{ p: 0 }}>
+          <ListItem
+            sx={{ p: 2, minWidth: 350, display: { xs: 'block', sm: 'flex' } }}
+          >
+            <Box flex="1">
+              <Box display="flex" justifyContent="space-between">
+                <Typography sx={{ fontWeight: 'bold' }}>
+                  Mensagem da Plataforma
+                </Typography>
+              </Box>
+              <Typography
+                component="span"
+                variant="body2"
+                color="text.secondary"
+              >
+                {' '}
+                {hasPendency ? message : 'Nenhuma notificação'}
+              </Typography>
+            </Box>
+          </ListItem>
+        </List>
+      </Popover>
+    </>
+  );
 };

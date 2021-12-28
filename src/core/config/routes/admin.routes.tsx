@@ -6,7 +6,7 @@ import { Details } from '@pages/Details';
 import { Personal } from '@pages/Personal';
 import { UserProfile } from '@pages/Profile/index';
 
-export const appRoutes: RouteObject[] = [
+export const adminRoutes: RouteObject[] = [
 	{
 		path: 'registration',
 		element: <SidebarLayout />,
