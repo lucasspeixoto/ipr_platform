@@ -22,8 +22,8 @@ export class IEcclesiastical {
 	constructor(
 		public membership: string,
 		public craft: string,
-		public communities: string[],
-		public interests: string[],
+		public communities: string,
+		public interests: string,
 		public baptism: string,
 		public baptism_date: string,
 		public baptism_shepherd: string,

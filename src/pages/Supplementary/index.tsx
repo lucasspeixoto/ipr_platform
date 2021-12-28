@@ -9,7 +9,7 @@ import { FormsPageHeader } from '@components/elements/FormsPageHeader';
 import { useParameters } from '@hooks/useParameters';
 import { SuspenseLoader } from '@components/pages/SuspenseLoader';
 
-export const Personal: React.FC = () => {
+export const Supplementary: React.FC = () => {
   const { parameters } = useParameters();
 
   return (
@@ -17,12 +17,12 @@ export const Personal: React.FC = () => {
       {parameters ? (
         <React.Fragment>
           <Helmet>
-            <title>Dados Pessoais</title>
+            <title>Dados Complementares</title>
           </Helmet>
           <PageTitleWrapper>
             <FormsPageHeader
               title="Dados"
-              subtitle="Preencha com atenção os seus dados pessoais"
+              subtitle="Preencha com atenção os seus dados complementares"
             />
           </PageTitleWrapper>
           <Container maxWidth="lg">

@@ -7,6 +7,6 @@ export interface IMemberDetail {
 	birth_date?: string;
 	email?: string;
 	membership?: string;
-	interests?: string[];
+	interests?: string;
 	observation?: string;
 }

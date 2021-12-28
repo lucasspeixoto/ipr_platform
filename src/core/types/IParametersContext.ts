@@ -7,5 +7,6 @@ export interface IParametersContext {
   membershipOption: string[];
   schoolingOptions: string[];
   sexOptions: string[];
+  baptismOption: string[];
   stateOptions: string[];
 }

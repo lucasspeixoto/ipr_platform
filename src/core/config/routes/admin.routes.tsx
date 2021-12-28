@@ -5,6 +5,8 @@ import { RouteObject } from 'react-router';
 import { Details } from '@pages/Details';
 import { Personal } from '@pages/Personal';
 import { UserProfile } from '@pages/Profile/index';
+import { Supplementary } from '@pages/Supplementary/index';
+import { Ecclesiastical } from '@pages/Ecclesiastical/index';
 
 export const adminRoutes: RouteObject[] = [
 	{
@@ -27,11 +29,11 @@ export const adminRoutes: RouteObject[] = [
 			},
 			{
 				path: 'supplementary',
-				element: <div>Complementares</div>,
+				element: <Supplementary/>,
 			},
 			{
 				path: 'ecclesiastical',
-				element: <div>Eclesiásticos</div>,
+				element: <Ecclesiastical/>,
 			},
 			{
 				path: '*',
