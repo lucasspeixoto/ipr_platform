@@ -23,21 +23,21 @@ import DashboardCustomizeIcon from '@mui/icons-material/DashboardCustomize';
 import { SidebarContext } from '@contexts/SidebarContext';
 
 const icons = {
-  '/registration/profile': <AccountBoxTwoToneIcon/>,
-	'/registration/personal': <ContactPhoneIcon />,
-	'/registration/supplementary': <PersonIcon />,
-	'/registration/ecclesiastical': <ChurchIcon />,
-	'/admin/detail': <TableChartIcon />,
-	'/admin/statistics': <InsertChartIcon />,
-	'/admin/data': <LegendToggleIcon />,
-	'/finance/register': <CalculateIcon />,
-	'/finance/gains': <AddCircleOutlineIcon />,
-	'/finance/expenses': <RemoveCircleOutlineIcon />,
-  '/finance/dashboards': <DashboardCustomizeIcon />,
+  '/registration/profile': <AccountBoxTwoToneIcon />,
+  '/registration/personal': <ContactPhoneIcon />,
+  '/registration/supplementary': <PersonIcon />,
+  '/registration/ecclesiastical': <ChurchIcon />,
+  '/admin/detail': <TableChartIcon />,
+  '/admin/statistics': <InsertChartIcon />,
+  '/admin/data': <LegendToggleIcon />,
+  '/finance/register': <CalculateIcon />,
+  '/finance/gains': <AddCircleOutlineIcon />,
+  '/finance/expenses': <RemoveCircleOutlineIcon />,
+  '/finance/dashboards': <DashboardCustomizeIcon />
 };
 
 const MenuWrapper = styled(List)(
-	({ theme }) => `
+  ({ theme }) => `
     margin-bottom: ${theme.spacing(1)};
     padding: 0;
 
@@ -53,11 +53,11 @@ const MenuWrapper = styled(List)(
       padding: ${theme.spacing(0.8, 2)};
       line-height: 1.4;
     }
-`,
+`
 );
 
 const SubMenuWrapper = styled(List)(
-	({ theme }) => `
+  ({ theme }) => `
     &.MuiList-root {
       padding: 0;
 
@@ -144,46 +144,46 @@ const SubMenuWrapper = styled(List)(
         }
       }
     }
-`,
+`
 );
 
 function SidebarMenu() {
-	const location = useLocation();
+  const location = useLocation();
 
-	const { toggleSidebar } = useContext(SidebarContext);
+  const { toggleSidebar } = useContext(SidebarContext);
 
-	return (
-		<>
-			{menuItems.map(section => (
-				<MenuWrapper
-					key={section.heading}
-					subheader={
-						<ListSubheader component='div' disableSticky>
-							{section.heading}
-						</ListSubheader>
-					}
-				>
-					<SubMenuWrapper>
-						{section.items.map((item, index) => (
-							<ListItem component='div' key={index}>
-								<Button
-									className={
-										item.link === location.pathname ? 'Mui-active' : ''
-									}
-									component={RouterLink}
-									onClick={toggleSidebar}
-									to={item.link}
-									startIcon={icons[item.link]}
-								>
-									{item.name}
-								</Button>
-							</ListItem>
-						))}
-					</SubMenuWrapper>
-				</MenuWrapper>
-			))}
-		</>
-	);
+  return (
+    <>
+      {menuItems.map((section) => (
+        <MenuWrapper
+          key={section.heading}
+          subheader={
+            <ListSubheader component="div" disableSticky>
+              {section.heading}
+            </ListSubheader>
+          }
+        >
+          <SubMenuWrapper>
+            {section.items.map((item, index) => (
+              <ListItem component="div" key={index}>
+                <Button
+                  className={
+                    item.link === location.pathname ? 'Mui-active' : ''
+                  }
+                  component={RouterLink}
+                  onClick={toggleSidebar}
+                  to={item.link}
+                  startIcon={icons[item.link]}
+                >
+                  {item.name}
+                </Button>
+              </ListItem>
+            ))}
+          </SubMenuWrapper>
+        </MenuWrapper>
+      ))}
+    </>
+  );
 }
 
 export default SidebarMenu;

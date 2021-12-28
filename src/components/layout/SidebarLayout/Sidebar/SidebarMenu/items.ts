@@ -13,7 +13,7 @@ const menuItems: MenuItems[] = [
     heading: 'Cadastro',
     items: [
       {
-        name: 'Meu Pefil',
+        name: 'Meu Perfil',
         link: '/registration/profile'
       },
       {

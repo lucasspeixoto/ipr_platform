@@ -12,6 +12,9 @@ import { styled } from '@mui/material/styles';
 import UploadTwoToneIcon from '@mui/icons-material/UploadTwoTone';
 
 import ProfileCoverImage from '@assets/profile-cover.png';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { IMember } from '@core/types/IMember';
 
 const Input = styled('input')({
   display: 'none'
@@ -67,7 +70,17 @@ const CardCover = styled(Card)(
 `
 );
 
-export const ProfileCover = ({ user }) => {
+interface ProfileCoverProps {
+  user: Partial<IMember>;
+  step: number;
+  routeForNextStep: string;
+}
+
+export const ProfileCover: React.FC<ProfileCoverProps> = ({
+  user,
+  step,
+  routeForNextStep
+}) => {
   return (
     <>
       <Box display="flex" mb={3}>
@@ -104,16 +117,32 @@ export const ProfileCover = ({ user }) => {
           </label>
         </ButtonUploadWrapper>
       </AvatarWrapper>
-      <Box py={2} pl={2} mb={1}>
-        <Typography gutterBottom variant="h4">
-          {user.auth.name}
-        </Typography>
-        <Typography variant="subtitle2">{user.description}</Typography>
-        <Typography sx={{ py: 2 }} variant="subtitle2" color="text.primary">
-          {user.ecclesiastical.craft} | {user.personal.city}-
-          {user.personal.state} | {user.ecclesiastical.membership}
-        </Typography>
-      </Box>
+      {step === 4 ? (
+        <Box py={2} pl={2} mb={1}>
+          <Typography gutterBottom variant="h4">
+            {user.auth.name}
+          </Typography>
+          <Typography variant="subtitle2">{user.observation}</Typography>
+          <Typography sx={{ py: 2 }} variant="subtitle2" color="text.primary">
+            {user.ecclesiastical.craft} | {user.personal.city}-
+            {user.personal.state} | {user.ecclesiastical.craft}
+          </Typography>
+        </Box>
+      ) : (
+        <>
+          <Box p={0} sx={{ textAlign: 'left' }}>
+            <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              to={routeForNextStep}
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Prosseguir No Cadastro
+            </Button>
+          </Box>
+        </>
+      )}
     </>
   );
 };

@@ -61,7 +61,7 @@ export const Header = () => {
 						<Notifications />
 						<HeaderUserbox />
 						<Hidden lgUp>
-							<Tooltip arrow title='Toggle Menu'>
+							<Tooltip arrow title='Menu'>
 								<IconButton color='primary' onClick={toggleSidebar}>
 									{!sidebarToggle ? <MenuTwoToneIcon /> : <CloseTwoToneIcon />}
 								</IconButton>
