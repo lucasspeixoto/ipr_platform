@@ -27,7 +27,7 @@ const icons = {
   '/registration/personal': <ContactPhoneIcon />,
   '/registration/supplementary': <PersonIcon />,
   '/registration/ecclesiastical': <ChurchIcon />,
-  '/admin/detail': <TableChartIcon />,
+  '/admin/list': <TableChartIcon />,
   '/admin/statistics': <InsertChartIcon />,
   '/admin/data': <LegendToggleIcon />,
   '/finance/register': <CalculateIcon />,

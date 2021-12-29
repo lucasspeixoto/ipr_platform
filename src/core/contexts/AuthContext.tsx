@@ -17,7 +17,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     setIsLogged(true);
     data.docs.forEach((item) => {
       const loggedUser = item.data().auth;
-     
+
       if (loggedUser.userId === userId) {
         setUser(loggedUser);
         setIsLogged(true);
@@ -43,7 +43,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [isLogged]);
 
   const registerUser = async (loggedUser: IUser) => {
     if (loggedUser) {
@@ -57,29 +57,33 @@ export const AuthContextProvider: React.FC = ({ children }) => {
   const signInWithGoogle = async () => {
     const provider = new firebase.auth.GoogleAuthProvider();
 
-    const result = await fireauth.signInWithPopup(provider);
+    const result = fireauth.signInWithPopup(provider);
 
-    if (result.user) {
-      const { displayName, email, photoURL, uid } = result.user;
+    result
+      .then((data) => {
+        if (data.user) {
+          const { displayName, email, photoURL, uid } = data.user;
 
-      const loggedUser: IUser = {
-        userId: uid,
-        name: displayName,
-        email: email,
-        photoUrl: photoURL,
-        admin: false
-      };
+          const loggedUser: IUser = {
+            userId: uid,
+            name: displayName,
+            email: email,
+            photoUrl: photoURL
+          };
 
-      setUser(loggedUser);
-      setIsLogged(true);
-      registerUser(loggedUser);
-    }
+          setUser(loggedUser);
+          setIsLogged(true);
+          registerUser(loggedUser);
+        }
+      })
+      .catch(() => {
+        setIsLogged(false);
+        setIsLoading(false);
+      });
   };
 
   const signInWithEmailAndPassword = (email: string, password: string) => {
-    setIsLoading(true);
     const result = fireauth.signInWithEmailAndPassword(email, password);
-
     return result;
   };
 
@@ -88,28 +92,31 @@ export const AuthContextProvider: React.FC = ({ children }) => {
     email: string,
     password: string
   ) => {
-    setIsLoading(true);
-    const result = await fireauth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
+    const result = fireauth.createUserWithEmailAndPassword(email, password);
 
-    if (result.user) {
-      result.user.sendEmailVerification();
-      const { email, uid } = result.user;
+    result
+      .then((data) => {
+        if (data.user) {
+          data.user.sendEmailVerification();
+          const { email, uid } = data.user;
 
-      const loggedUser: IUser = {
-        userId: uid,
-        name: name,
-        email: email,
-        photoUrl: '',
-        admin: false
-      };
+          const loggedUser: IUser = {
+            userId: uid,
+            name: name,
+            email: email,
+            photoUrl: '',
+            admin: false
+          };
 
-      setUser(loggedUser);
-      setIsLogged(true);
-      registerUser(loggedUser);
-    }
+          setUser(loggedUser);
+          setIsLogged(true);
+          registerUser(loggedUser);
+        }
+      })
+      .catch(() => {
+        setIsLogged(false);
+        setIsLoading(false);
+      });
   };
 
   const sendPasswordResetEmail = async (email: string) => {
@@ -117,8 +124,10 @@ export const AuthContextProvider: React.FC = ({ children }) => {
   };
 
   const logout = async () => {
+    setIsLoading(true);
     await fireauth.signOut();
     setIsLogged(false);
+    setIsLoading(false);
     setUser(undefined);
   };
 
@@ -127,6 +136,7 @@ export const AuthContextProvider: React.FC = ({ children }) => {
       value={{
         isLogged,
         isLoading,
+        setIsLoading,
         user,
         signInWithGoogle,
         signInWithEmailAndPassword,

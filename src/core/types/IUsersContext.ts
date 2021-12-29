@@ -1,10 +1,12 @@
-import { IMember } from "./IMember";
-import { IMemberDetail } from "./IMemberDetail";
+import { IMember } from './IMember';
+import { IMemberDetail } from './IMemberDetail';
 
 export interface IUsersContext {
-	isLoading: boolean;
-	membersTotal: Partial<IMember>[] | undefined;
-	membersDetails: IMemberDetail[] | undefined;
-	activeMember: Partial<IMember> | undefined;
-	deleteMember: (id: string) => Promise<void>;
+  isLoading: boolean;
+  membersTotal: Partial<IMember>[] | undefined;
+  membersDetails: IMemberDetail[] | undefined;
+  activeMember: Partial<IMember> | undefined;
+  deleteMember: (id: string) => Promise<void>;
+  selectedMember: Partial<IMember> | undefined;
+  getSelectedMember: (id: string) => Promise<void>;
 }

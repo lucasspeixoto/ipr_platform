@@ -124,7 +124,7 @@ export const ProfileCover: React.FC<ProfileCoverProps> = ({
           </Typography>
           <Typography variant="subtitle2">{user.observation}</Typography>
           <Typography sx={{ py: 2 }} variant="subtitle2" color="text.primary">
-            {user.ecclesiastical.craft} | {user.personal.city}-
+            {user.supplementary.profession} | {user.personal.city}-
             {user.personal.state} | {user.ecclesiastical.craft}
           </Typography>
         </Box>

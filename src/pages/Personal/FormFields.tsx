@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import {
   Card,
@@ -21,6 +21,8 @@ import { useAuth } from '@hooks/useAuth';
 import { registration } from '@core/services/RegistrationService';
 import { useMembers } from '@hooks/useMembers';
 import { useNavigate } from 'react-router-dom';
+import { SnackbarMessage } from '@components/elements/SnackbarMessage';
+import { SnackBarMessageProps } from '@core/types/ISnackbarMessage';
 
 interface IFormFieldsProps {
   parameters: IParametersContext;
@@ -30,6 +32,12 @@ export const FormFields: React.FC<IFormFieldsProps> = ({ parameters }) => {
   const { user } = useAuth();
   const { activeMember } = useMembers();
   const navigate = useNavigate();
+
+  const [snackbar, setSnackbar] = useState<SnackBarMessageProps>({
+    open: false,
+    severity: null,
+    message: null
+  });
 
   const {
     register,
@@ -54,7 +62,13 @@ export const FormFields: React.FC<IFormFieldsProps> = ({ parameters }) => {
 
   const sendData = () => {
     registration(personalData, user?.userId, 'personal');
-    navigate('/registration/supplementary')
+    setSnackbar({
+      open: true,
+      severity: 'success',
+      message: 'Dados Pessoais Cadastrados com sucesso.'
+    });
+
+    navigate('/registration/supplementary');
   };
 
   return (
@@ -308,6 +322,14 @@ export const FormFields: React.FC<IFormFieldsProps> = ({ parameters }) => {
             </Box>
           </CardContent>
         </Card>
+      )}
+      {snackbar.open && (
+        <SnackbarMessage
+          open={snackbar.open}
+          message={snackbar.message}
+          severity={snackbar.severity}
+          onClose={setSnackbar}
+        />
       )}
     </>
   );

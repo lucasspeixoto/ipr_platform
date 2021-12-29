@@ -14,7 +14,26 @@ export const MembersContextProvider: React.FC = ({ children }) => {
   const [membersTotal, setMembersTotal] = useState<Partial<IMember>[]>();
   const [membersDetails, setMembersDetails] = useState<IMemberDetail[]>();
   const [activeMember, setActiveMember] = useState<Partial<IMember>>();
+  const [selectedMember, setSelectedMember] = useState<Partial<IMember>>();
+
   const { user } = useAuth();
+
+  const getSelectedMember = async (userId: string) => {
+    const result = firestore.collection('users');
+
+    if (user) {
+      result.onSnapshot((value) => {
+        if (value) {
+          value.forEach((doc) => {
+            const item: Partial<IMember> = doc.data();
+            if (item.auth.userId === userId) {
+              setSelectedMember(item);
+            }
+          });
+        }
+      });
+    }
+  };
 
   const membersDetailsHandler = (listOfMembers: Partial<IMember>[]) => {
     setMembersTotal(listOfMembers);
@@ -28,8 +47,8 @@ export const MembersContextProvider: React.FC = ({ children }) => {
     setIsLoading(true);
     let listOfMembers: Partial<IMember>[] = [];
     if (user) {
-      const result = firestore.collection('users')
-      
+      const result = firestore.collection('users');
+
       result.onSnapshot((value) => {
         if (value) {
           value.forEach((doc) => {
@@ -42,9 +61,11 @@ export const MembersContextProvider: React.FC = ({ children }) => {
         }
 
         membersDetailsHandler(listOfMembers);
-
       });
 
+      setIsLoading(false);
+    } else {
+      setActiveMember(undefined);
       setIsLoading(false);
     }
   }, [user, isLoading]);
@@ -62,7 +83,9 @@ export const MembersContextProvider: React.FC = ({ children }) => {
         membersTotal,
         membersDetails,
         activeMember,
-        deleteMember
+        deleteMember,
+        selectedMember,
+        getSelectedMember
       }}
     >
       {children}

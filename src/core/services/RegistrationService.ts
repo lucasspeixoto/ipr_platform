@@ -11,7 +11,6 @@ const ProcessRefs = {
 };
 
 type Registration = IPersonal | ISupplementary | IEcclesiastical;
-
 type DataRef = firebase.firestore.DocumentData;
 
 export const registration = async (
@@ -25,6 +24,10 @@ export const registration = async (
 
   sendData(formData, dataRef, type);
 
+  sendProcess(dataRef, type);
+};
+
+const sendProcess = async (dataRef: DataRef, type: string) => {
   /* Dados de Processo */
   const addProcess = { process: ProcessRefs[type] };
   await dataRef.set(addProcess, { merge: true });
@@ -48,5 +51,15 @@ const sendData = async (
       const ecclesiasticalAddData = { ecclesiastical: { ...formData } };
       await dataRef.set(ecclesiasticalAddData, { merge: true });
       break;
+    default:
+      break;
   }
+};
+
+export const sendObservation = async (userId: string, observation: string) => {
+  const url = `users/${userId}`;
+  const dataRef = firestore.doc(url);
+
+  const observationAddData = { observation: observation };
+  await dataRef.set(observationAddData, { merge: true });
 };

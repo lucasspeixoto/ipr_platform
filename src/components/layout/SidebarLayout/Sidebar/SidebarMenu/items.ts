@@ -35,7 +35,7 @@ export const menuItemsAdmin: MenuItems[] = [
     items: [
       {
         name: 'Listagem de membros',
-        link: '/admin/detail'
+        link: '/admin/list'
       },
       {
         name: 'Estatisticas',
