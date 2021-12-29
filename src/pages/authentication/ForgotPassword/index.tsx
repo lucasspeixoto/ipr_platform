@@ -75,23 +75,25 @@ export const ForgotPassword = () => {
     setIsLoading(true);
     const { email } = data;
 
-    try {
-      sendPasswordResetEmail(email);
-      setIsLoading(false);
-      setSnackbar({
-        open: true,
-        severity: 'info',
-        message: 'E-mail Enviado'
+    const result = sendPasswordResetEmail(email);
+    result
+      .then(() => {
+        setIsLoading(false);
+        setSnackbar({
+          open: true,
+          severity: 'info',
+          message: 'E-mail Enviado'
+        });
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        const code: string = error.code;
+        setSnackbar({
+          open: true,
+          severity: 'error',
+          message: Error[code]
+        });
       });
-    } catch (error) {
-      setIsLoading(false);
-      const code: string = error.code;
-      setSnackbar({
-        open: true,
-        severity: 'error',
-        message: Error[code]
-      });
-    }
   };
 
   return (

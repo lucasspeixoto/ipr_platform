@@ -119,8 +119,9 @@ export const AuthContextProvider: React.FC = ({ children }) => {
       });
   };
 
-  const sendPasswordResetEmail = async (email: string) => {
-    return await fireauth.sendPasswordResetEmail(email);
+  const sendPasswordResetEmail = (email: string) => {
+    const result = fireauth.sendPasswordResetEmail(email);
+    return result;
   };
 
   const logout = async () => {
