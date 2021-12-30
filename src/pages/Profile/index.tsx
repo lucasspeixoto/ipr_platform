@@ -9,9 +9,11 @@ import Footer from '@components/layout/Footer';
 import { useMembers } from '@hooks/useMembers';
 import { SuspenseLoader } from '@components/pages/SuspenseLoader/index';
 import { ProfileData } from './ProfileData';
+import { useAuth } from '@hooks/useAuth';
 
 export const UserProfile: React.FC = () => {
   const { activeMember } = useMembers();
+  const { user } = useAuth();
 
   const [step, setStep] = useState(1);
   const [routeForNextStep, setRouteForNextStep] = useState<string>('/');
@@ -20,7 +22,26 @@ export const UserProfile: React.FC = () => {
     if (activeMember) {
       const { personal, supplementary, ecclesiastical } = activeMember;
 
-      if (ecclesiastical) {
+      if (activeMember?.process) {
+        if (activeMember?.process?.hasEcclesiastical) {
+          setStep(4); // go to '/registration/resume'
+          setRouteForNextStep('/registration/resume');
+        } else if (activeMember?.process?.hasSupplementary) {
+          setStep(3); // go to '/registration/ecclesiastical'
+          setRouteForNextStep('/registration/ecclesiastical');
+        } else if (activeMember?.process?.hasPersonal) {
+          setStep(2); // go to '/registration/supplementary'
+          setRouteForNextStep('/registration/supplementary');
+        } else if (!activeMember?.process) {
+          setStep(1); // go to '/registration/personal'
+          setRouteForNextStep('/registration/personal');
+        }
+      } else {
+        setStep(1); // go to '/registration/personal'
+        setRouteForNextStep('/registration/personal');
+      }
+
+      /* if (ecclesiastical) {
         setStep(4); // go to '/registration/resume'
         setRouteForNextStep('/registration/resume');
       } else if (supplementary) {
@@ -32,10 +53,11 @@ export const UserProfile: React.FC = () => {
       } else {
         setStep(1); // go to '/registration/personal'
         setRouteForNextStep('/registration/personal');
-      }
+      } */
     }
   }, [activeMember]);
 
+ 
   return (
     <>
       {activeMember ? (

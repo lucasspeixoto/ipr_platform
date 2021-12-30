@@ -33,8 +33,6 @@ export const ProfileItemCard: React.FC<ProfileItemCardProps> = ({
   data,
   link
 }) => {
-  const keys = Object.keys(data);
-
   return (
     <Grid item xs={12}>
       <Card>
@@ -60,26 +58,34 @@ export const ProfileItemCard: React.FC<ProfileItemCardProps> = ({
           </Button>
         </Box>
         <Divider />
-        <CardContent sx={{ p: 2 }}>
-          <Typography variant="subtitle2">
-            <Grid container spacing={0}>
-              {keys.map((key, index) => (
-                <React.Fragment key={index}>
-                  <Grid item xs={12} sm={4} md={3} textAlign={{ sm: 'right' }}>
-                    <Box pr={3} pb={2}>
-                      {keysNames[key]}:
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} sm={8} md={9}>
-                    <TextWrapper color="black">
-                      <b>{formatDate(key, data[key])}</b>
-                    </TextWrapper>
-                  </Grid>
-                </React.Fragment>
-              ))}
-            </Grid>
-          </Typography>
-        </CardContent>
+        {data && (
+          <CardContent sx={{ p: 2 }}>
+            <Typography variant="subtitle2">
+              <Grid container spacing={0}>
+                {Object.keys(data).map((key, index) => (
+                  <React.Fragment key={index}>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={4}
+                      md={3}
+                      textAlign={{ sm: 'right' }}
+                    >
+                      <Box pr={3} pb={2}>
+                        {keysNames[key]}:
+                      </Box>
+                    </Grid>
+                    <Grid item xs={12} sm={8} md={9}>
+                      <TextWrapper color="black">
+                        <b>{formatDate(key, data[key])}</b>
+                      </TextWrapper>
+                    </Grid>
+                  </React.Fragment>
+                ))}
+              </Grid>
+            </Typography>
+          </CardContent>
+        )}
       </Card>
     </Grid>
   );

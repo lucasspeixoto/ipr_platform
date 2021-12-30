@@ -11,12 +11,15 @@ export const MembersContext = createContext({} as IUsersContext);
 
 export const MembersContextProvider: React.FC = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [membersTotal, setMembersTotal] = useState<Partial<IMember>[]>();
-  const [membersDetails, setMembersDetails] = useState<IMemberDetail[]>();
-  const [activeMember, setActiveMember] = useState<Partial<IMember>>();
-  const [selectedMember, setSelectedMember] = useState<Partial<IMember>>();
+  const [membersTotal, setMembersTotal] =
+    useState<Partial<IMember>[]>(undefined);
+  const [membersDetails, setMembersDetails] =
+    useState<IMemberDetail[]>(undefined);
+  const [activeMember, setActiveMember] = useState<Partial<IMember>>(undefined);
+  const [selectedMember, setSelectedMember] =
+    useState<Partial<IMember>>(undefined);
 
-  const { user } = useAuth();
+  const { user, isLogged } = useAuth();
 
   const getSelectedMember = async (userId: string) => {
     const result = firestore.collection('users');
@@ -46,7 +49,7 @@ export const MembersContextProvider: React.FC = ({ children }) => {
   useEffect(() => {
     setIsLoading(true);
     let listOfMembers: Partial<IMember>[] = [];
-    if (user) {
+    if (user && isLogged) {
       const result = firestore.collection('users');
 
       result.onSnapshot((value) => {
@@ -65,10 +68,9 @@ export const MembersContextProvider: React.FC = ({ children }) => {
 
       setIsLoading(false);
     } else {
-      setActiveMember(undefined);
       setIsLoading(false);
     }
-  }, [user, isLoading]);
+  }, [user, isLoading, isLogged]);
 
   const deleteMember = async (userId: string) => {
     setIsLoading(true);

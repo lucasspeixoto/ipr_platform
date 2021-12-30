@@ -117,15 +117,15 @@ export const ProfileCover: React.FC<ProfileCoverProps> = ({
           </label>
         </ButtonUploadWrapper>
       </AvatarWrapper>
-      {step === 4 ? (
+      {user.personal && user.supplementary && user.ecclesiastical ? (
         <Box py={2} pl={2} mb={1}>
           <Typography gutterBottom variant="h4">
             {user.auth.name}
           </Typography>
-          <Typography variant="subtitle2">{user.observation}</Typography>
+          <Typography variant="subtitle2">{user?.observation}</Typography>
           <Typography sx={{ py: 2 }} variant="subtitle2" color="text.primary">
-            {user.supplementary.profession} | {user.personal.city}-
-            {user.personal.state} | {user.ecclesiastical.craft}
+            {user.supplementary?.profession} | {user.personal?.city}-
+            {user.personal?.state} | {user.ecclesiastical?.craft}
           </Typography>
         </Box>
       ) : (
