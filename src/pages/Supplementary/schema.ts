@@ -5,8 +5,7 @@ export const schema = yup
   .object({
     marital_status: yup.string().trim().required(Messages.required),
     spouse_name: yup.string().trim(),
-    birth_date: yup.string().trim(),
-    wedding_date: yup.string().trim().required(Messages.required),
+    wedding_date: yup.string().trim(),
     schooling: yup.string().trim().required(Messages.required),
     profession: yup.string().trim().required(Messages.required),
     father_name: yup.string().trim().required(Messages.required),

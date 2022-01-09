@@ -122,7 +122,6 @@ export const ProfileCover: React.FC<ProfileCoverProps> = ({
           <Typography gutterBottom variant="h4">
             {user.auth.name}
           </Typography>
-          <Typography variant="subtitle2">{user?.observation}</Typography>
           <Typography sx={{ py: 2 }} variant="subtitle2" color="text.primary">
             {user.supplementary?.profession} | {user.personal?.city}-
             {user.personal?.state} | {user.ecclesiastical?.craft}

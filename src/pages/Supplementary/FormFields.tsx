@@ -11,7 +11,7 @@ import {
 
 import SendIcon from '@mui/icons-material/Send';
 
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Button, Grid } from '@mui/material';
 
@@ -37,6 +37,7 @@ export const FormFields: React.FC<IFormFieldsProps> = ({ parameters }) => {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors }
   } = useForm<ISupplementary>({
     mode: 'onSubmit',
@@ -67,108 +68,199 @@ export const FormFields: React.FC<IFormFieldsProps> = ({ parameters }) => {
             <Box component="form" onSubmit={handleSubmit(sendData)}>
               <Grid container spacing={2} sx={{ pb: 1 }}>
                 <Grid item md={4} xs={12}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="marital_status"
-                    select
-                    label="Estado Civil"
-                    defaultValue="Solteiro"
-                    {...register('marital_status')}
-                    error={errors.marital_status?.message !== undefined}
-                    helperText={errors.marital_status?.message}
-                  >
-                    {parameters.maritalStatusOptions.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                  <Controller
+                    name="marital_status"
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error }
+                    }) => (
+                      <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="marital_status"
+                        select
+                        label="Estado Civil"
+                        {...register('marital_status')}
+                        error={errors.marital_status?.message !== undefined}
+                        helperText={errors.marital_status?.message}
+                        value={value}
+                        onChange={onChange}
+                      >
+                        {parameters.maritalStatusOptions.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    id="spouse_name"
-                    label="Nome do Cônjuge"
+                  <Controller
                     name="spouse_name"
-                    {...register('spouse_name')}
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error }
+                    }) => (
+                      <TextField
+                        margin="normal"
+                        fullWidth
+                        id="spouse_name"
+                        label="Nome do Cônjuge"
+                        name="spouse_name"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        {...register('spouse_name')}
+                        value={value}
+                        onChange={onChange}
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    id="wedding_date"
-                    label="Data de Casamento"
-                    type="date"
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                    {...register('wedding_date')}
-                    error={errors.wedding_date?.message !== undefined}
-                    helperText={errors.wedding_date?.message}
+                  <Controller
+                    name="wedding_date"
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error }
+                    }) => (
+                      <TextField
+                        margin="normal"
+                        fullWidth
+                        id="wedding_date"
+                        label="Data de Casamento"
+                        name="wedding_date"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        {...register('wedding_date')}
+                        value={value}
+                        onChange={onChange}
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="schooling"
-                    select
-                    label="Escolaridade"
-                    defaultValue="Fundamental - Incompleto"
-                    {...register('schooling')}
-                    error={errors.schooling?.message !== undefined}
-                    helperText={errors.schooling?.message}
-                    InputLabelProps={{
-                      shrink: true
-                    }}
-                  >
-                    {parameters.schoolingOptions.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                  <Controller
+                    name="schooling"
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error }
+                    }) => (
+                      <TextField
+                        margin="normal"
+                        fullWidth
+                        id="schooling"
+                        select
+                        label="Escolaridade"
+                        required
+                        {...register('schooling')}
+                        error={errors.schooling?.message !== undefined}
+                        helperText={errors.schooling?.message}
+                        value={value}
+                        onChange={onChange}
+                      >
+                        {parameters.schoolingOptions.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="profession"
-                    label="Profissão"
+                  <Controller
                     name="profession"
-                    {...register('profession')}
-                    error={errors.profession?.message !== undefined}
-                    helperText={errors.profession?.message}
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error }
+                    }) => (
+                      <TextField
+                        margin="normal"
+                        fullWidth
+                        id="profession"
+                        label="Profissão"
+                        name="profession"
+                        required
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        {...register('profession')}
+                        error={errors.profession?.message !== undefined}
+                        helperText={errors.profession?.message}
+                        value={value}
+                        onChange={onChange}
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    id="father_name"
-                    label="Nome do Pai"
+                  <Controller
                     name="father_name"
-                    {...register('father_name')}
-                    error={errors.father_name?.message !== undefined}
-                    helperText={errors.father_name?.message}
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error }
+                    }) => (
+                      <TextField
+                        margin="normal"
+                        fullWidth
+                        id="father_name"
+                        label="Nome do Pai"
+                        name="father_name"
+                        required
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        {...register('father_name')}
+                        error={errors.father_name?.message !== undefined}
+                        helperText={errors.father_name?.message}
+                        value={value}
+                        onChange={onChange}
+                      />
+                    )}
                   />
                 </Grid>
                 <Grid item md={4} xs={12}>
-                  <TextField
-                    margin="normal"
-                    fullWidth
-                    id="mother_name"
-                    label="Nome da mãe"
+                  <Controller
                     name="mother_name"
-                    {...register('mother_name')}
-                    error={errors.mother_name?.message !== undefined}
-                    helperText={errors.mother_name?.message}
+                    control={control}
+                    defaultValue=""
+                    render={({
+                      field: { onChange, value },
+                      fieldState: { error }
+                    }) => (
+                      <TextField
+                        margin="normal"
+                        fullWidth
+                        id="mother_name"
+                        label="Nome da Mãe"
+                        name="mother_name"
+                        required
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        {...register('mother_name')}
+                        error={errors.mother_name?.message !== undefined}
+                        helperText={errors.mother_name?.message}
+                        value={value}
+                        onChange={onChange}
+                      />
+                    )}
                   />
                 </Grid>
               </Grid>

@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useState } from 'react';
-import { format, parseISO } from 'date-fns';
 
 import PropTypes from 'prop-types';
 import {
@@ -253,9 +252,7 @@ export const MembersTable: React.FC<MemberTableProps> = ({ members }) => {
                         gutterBottom
                         noWrap
                       >
-                        {member.birth_date
-                          ? format(parseISO(member.birth_date), "dd/MM/yyyy'")
-                          : ''}
+                        {member.birth_date}
                       </Typography>
                     </Typography>
                   </TableCell>
@@ -291,7 +288,7 @@ export const MembersTable: React.FC<MemberTableProps> = ({ members }) => {
           labelRowsPerPage={'Registros por página'}
           page={page}
           rowsPerPage={limit}
-          rowsPerPageOptions={[5, 10, 15, 30]}
+          rowsPerPageOptions={[5, 10, 15, 30, 50]}
         />
       </Box>
     </Card>
